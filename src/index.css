@@ -129,6 +129,65 @@ h1 {
   border: 1px solid var(--bordure);
 }
 
+/* --- Réservation depuis une carte produit --- */
+
+.reserver {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+.reserver input {
+  width: 4rem;
+  font: inherit;
+  padding: 0.4rem;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+}
+.reserver button {
+  padding: 0.4rem 0.7rem;
+}
+
+.succes {
+  color: var(--vert-fonce);
+  font-size: 0.9rem;
+  margin: 0.4rem 0 0;
+}
+
+/* --- Page « Mes réservations » --- */
+
+.liste-resa {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+.liste-resa li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--bordure);
+}
+.badge {
+  margin-left: auto;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--bordure);
+  white-space: nowrap;
+}
+.badge-en_attente {
+  background: #fff8e1;
+  border-color: #ffe082;
+}
+.badge-confirmee {
+  background: #e8f5e9;
+  border-color: #a5d6a7;
+}
+.badge-annulee {
+  background: #ffebee;
+  border-color: #ef9a9a;
+}
+
 /* --- Formulaire de connexion --- */
 
 .connexion {

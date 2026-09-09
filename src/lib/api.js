@@ -27,6 +27,11 @@ export async function api(chemin, { method = 'GET', body } = {}) {
   }
 
   if (!reponse.ok) {
+    // Jeton refusé alors qu'on en avait un : la session n'est plus valable
+    // (compte supprimé, session révoquée…) → on déconnecte pour rafraîchir l'UI.
+    if (reponse.status === 401 && token) {
+      await supabase.auth.signOut()
+    }
     throw new Error((corps && corps.erreur) || `Erreur ${reponse.status}`)
   }
   return corps

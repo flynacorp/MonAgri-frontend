@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../lib/api'
+import CarteProduit from '../components/CarteProduit'
 
 export default function Produits() {
   const [produits, setProduits] = useState([])
@@ -24,14 +25,7 @@ export default function Produits() {
       ) : (
         <ul className="cartes">
           {produits.map((p) => (
-            <li key={p.id} className="carte">
-              <h3>{p.nom}</h3>
-              <p className="prix">{p.prix_unite} € / unité</p>
-              <p className="detail">
-                {p.quantite_disponible} disponible(s)
-                {p.region ? ` · ${p.region}` : ''}
-              </p>
-            </li>
+            <CarteProduit key={p.id} produit={p} />
           ))}
         </ul>
       )}

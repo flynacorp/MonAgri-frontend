@@ -42,12 +42,15 @@ src/
   lib/api.js         fetch vers l'API backend, ajoute le jeton Bearer
   components/
     Layout.jsx       en-tête + navigation + état de connexion
+  components/
+    CarteProduit.jsx   carte + formulaire de réservation (si connecté)
   pages/
-    Produits.jsx     liste publique des produits
-    Parcelles.jsx    liste publique des parcelles
-    Connexion.jsx    formulaire connexion / inscription
-  App.jsx            routes
-  main.jsx           BrowserRouter + AuthProvider
+    Produits.jsx       liste des produits, réservation par carte
+    Parcelles.jsx      liste publique des parcelles
+    Connexion.jsx      formulaire connexion / inscription
+    MesReservations.jsx  mes réservations (produits + parcelles) avec statut
+  App.jsx             routes
+  main.jsx            BrowserRouter + AuthProvider
 ```
 
 ## Comment ça parle au backend
@@ -62,7 +65,8 @@ src/
 
 - [x] Listes publiques produits & parcelles
 - [x] Connexion / inscription / déconnexion
-- [ ] Réserver un produit / une parcelle (client connecté)
-- [ ] « Mes réservations »
+- [x] Réserver un produit (client connecté)
+- [x] « Mes réservations » (produits + parcelles, avec statut)
+- [ ] Réserver une parcelle (date de début, culture souhaitée)
 - [ ] Espace agriculteur : devenir agriculteur, créer/gérer ses annonces,
       traiter les réservations reçues

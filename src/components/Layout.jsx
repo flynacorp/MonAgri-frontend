@@ -19,6 +19,7 @@ export default function Layout({ children }) {
         <nav>
           <Link to="/">Produits</Link>
           <Link to="/parcelles">Parcelles</Link>
+          {utilisateur && <Link to="/mes-reservations">Mes réservations</Link>}
         </nav>
         <div className="compte">
           {utilisateur ? (
