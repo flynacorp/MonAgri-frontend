@@ -188,6 +188,43 @@ h1 {
   border-color: #ef9a9a;
 }
 
+.liste-resa .actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.liste-resa .actions button {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.85rem;
+}
+
+button.lien.danger {
+  color: var(--rouge);
+}
+
+/* --- Espace agriculteur --- */
+
+.espace-agri > section {
+  margin-bottom: 2.5rem;
+}
+.form-annonce {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.form-annonce input {
+  font: inherit;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+}
+.form-annonce input[type='number'] {
+  width: 9rem;
+}
+
 /* --- Formulaire de connexion --- */
 
 .connexion {

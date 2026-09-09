@@ -4,6 +4,7 @@ import Produits from './pages/Produits'
 import Parcelles from './pages/Parcelles'
 import Connexion from './pages/Connexion'
 import MesReservations from './pages/MesReservations'
+import EspaceAgriculteur from './pages/EspaceAgriculteur'
 
 export default function App() {
   return (
@@ -12,6 +13,7 @@ export default function App() {
         <Route path="/" element={<Produits />} />
         <Route path="/parcelles" element={<Parcelles />} />
         <Route path="/mes-reservations" element={<MesReservations />} />
+        <Route path="/espace-agriculteur" element={<EspaceAgriculteur />} />
         <Route path="/connexion" element={<Connexion />} />
         <Route path="*" element={<p>Page introuvable.</p>} />
       </Routes>
