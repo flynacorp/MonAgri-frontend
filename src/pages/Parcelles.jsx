@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../lib/api'
+import CarteParcelle from '../components/CarteParcelle'
 
 export default function Parcelles() {
   const [parcelles, setParcelles] = useState([])
@@ -24,14 +25,7 @@ export default function Parcelles() {
       ) : (
         <ul className="cartes">
           {parcelles.map((p) => (
-            <li key={p.id} className="carte">
-              <h3>{p.surface_m2} m²</h3>
-              <p className="detail">
-                {p.type_sol ? `Sol ${p.type_sol}` : 'Sol non précisé'}
-                {p.region ? ` · ${p.region}` : ''}
-              </p>
-              <p className="statut">{p.statut}</p>
-            </li>
+            <CarteParcelle key={p.id} parcelle={p} />
           ))}
         </ul>
       )}

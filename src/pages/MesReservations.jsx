@@ -78,6 +78,7 @@ export default function MesReservations() {
             <li key={r.id}>
               <strong>{nomParcelle(r.parcelle_id)}</strong>
               {r.date_debut ? ` — dès le ${r.date_debut}` : ''}
+              {r.culture_demandee ? ` · ${r.culture_demandee}` : ''}
               <span className={`badge badge-${r.statut}`}>
                 {LIBELLE_STATUT[r.statut] ?? r.statut}
               </span>

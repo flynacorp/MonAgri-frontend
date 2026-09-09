@@ -43,13 +43,14 @@ src/
   components/
     Layout.jsx       en-tête + navigation + état de connexion
   components/
-    CarteProduit.jsx      carte + formulaire de réservation (si connecté)
-    GestionProduits.jsx   agriculteur : ajouter / lister / retirer ses produits
-    GestionParcelles.jsx  idem pour les parcelles
+    CarteProduit.jsx      carte + formulaire de réservation (quantité)
+    CarteParcelle.jsx     carte + formulaire de réservation (date, culture)
+    GestionProduits.jsx   agriculteur : ajouter / modifier / retirer ses produits
+    GestionParcelles.jsx  idem pour les parcelles (+ statut disponible/reservee)
     ReservationsRecues.jsx  agriculteur : accepter / refuser les réservations reçues
   pages/
     Produits.jsx          liste des produits, réservation par carte
-    Parcelles.jsx         liste publique des parcelles
+    Parcelles.jsx         liste des parcelles, réservation par carte
     Connexion.jsx         formulaire connexion / inscription
     MesReservations.jsx   mes réservations (produits + parcelles) avec statut
     EspaceAgriculteur.jsx  hub agriculteur : devenir agriculteur, puis gestion
@@ -69,10 +70,8 @@ src/
 
 - [x] Listes publiques produits & parcelles
 - [x] Connexion / inscription / déconnexion
-- [x] Réserver un produit (client connecté)
-- [x] « Mes réservations » (produits + parcelles, avec statut)
-- [x] Espace agriculteur : devenir agriculteur, créer/retirer ses annonces,
-      accepter/refuser les réservations reçues
-- [ ] Réserver une parcelle depuis le front (date de début, culture souhaitée)
-- [ ] Modifier une annonce (PATCH) — pour l'instant : retirer + recréer
+- [x] Réserver un produit (quantité) et une parcelle (date de début, culture)
+- [x] « Mes réservations » (produits + parcelles, avec statut et détails)
+- [x] Espace agriculteur : devenir agriculteur ; créer / **modifier** / retirer
+      ses produits et parcelles ; accepter / refuser les réservations reçues
 - [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)

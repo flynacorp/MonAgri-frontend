@@ -147,6 +147,21 @@ h1 {
   padding: 0.4rem 0.7rem;
 }
 
+.reserver-parcelle {
+  flex-direction: column;
+  align-items: stretch;
+}
+.reserver-parcelle label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+.reserver-parcelle input {
+  width: 100%;
+}
+
 .succes {
   color: var(--vert-fonce);
   font-size: 0.9rem;
@@ -163,9 +178,17 @@ h1 {
 .liste-resa li {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.6rem;
   padding: 0.7rem 0;
   border-bottom: 1px solid var(--bordure);
+}
+.liste-resa li > form {
+  flex: 1 1 100%;
+}
+.liste-resa li .erreur {
+  flex: 1 1 100%;
+  margin: 0;
 }
 .badge {
   margin-left: auto;
@@ -215,11 +238,13 @@ button.lien.danger {
   align-items: center;
   margin-bottom: 1rem;
 }
-.form-annonce input {
+.form-annonce input,
+.form-annonce select {
   font: inherit;
   padding: 0.45rem 0.6rem;
   border: 1px solid var(--bordure);
   border-radius: 6px;
+  background: #fff;
 }
 .form-annonce input[type='number'] {
   width: 9rem;
