@@ -77,6 +77,8 @@ src/
 - [x] Espace agriculteur : devenir agriculteur ; créer / **modifier** / retirer
       ses produits et parcelles (dont `cultures_autorisees`, `max_m2_par_client`) ;
       accepter / refuser les réservations reçues
-- [ ] Phase B : date de récolte, prix, statut « payé », règles d'annulation
+- [x] **Phase B** : prix des réservations (affiché + figé), statut « payé »
+      (l'agriculteur le coche), date de récolte (l'agriculteur la pose), le
+      client peut annuler sa réservation tant qu'elle est en attente
 - [ ] Phase C : photos (Supabase Storage)
 - [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)

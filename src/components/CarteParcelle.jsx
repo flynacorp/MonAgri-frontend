@@ -7,6 +7,7 @@ export default function CarteParcelle({ parcelle, onReservation }) {
   const { utilisateur } = useAuth()
   const cultures = parcelle.cultures_autorisees ?? []
   const restante = parcelle.surface_restante ?? parcelle.surface_m2
+  const prixM2 = Number(parcelle.prix_m2) || 0
 
   const [surface, setSurface] = useState('')
   const [culture, setCulture] = useState(cultures[0] ?? '')
@@ -53,6 +54,8 @@ export default function CarteParcelle({ parcelle, onReservation }) {
       </p>
       <p className="detail">
         <strong>{restante} m²</strong> encore disponibles sur {parcelle.surface_m2}
+        {' · '}
+        {prixM2} € / m²
       </p>
       {cultures.length > 0 && (
         <p className="detail">Cultures : {cultures.join(', ')}</p>
@@ -107,6 +110,9 @@ export default function CarteParcelle({ parcelle, onReservation }) {
           <button type="submit" disabled={enCours}>
             {enCours ? '…' : 'Réserver'}
           </button>
+          {Number(surface) > 0 && (
+            <p className="detail">Total : {(Number(surface) * prixM2).toFixed(2)} €</p>
+          )}
         </form>
       )}
 

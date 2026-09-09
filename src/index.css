@@ -190,6 +190,20 @@ h1 {
   flex: 1 1 100%;
   margin: 0;
 }
+.liste-resa .recolte {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--gris);
+}
+.liste-resa .recolte input {
+  font: inherit;
+  padding: 0.3rem 0.5rem;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+}
 .badge {
   margin-left: auto;
   font-size: 0.75rem;

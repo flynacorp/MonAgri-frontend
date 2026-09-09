@@ -11,6 +11,7 @@ export default function CarteProduit({ produit }) {
   const [enCours, setEnCours] = useState(false)
 
   const epuise = produit.quantite_disponible < 1
+  const total = (Number(quantite) || 0) * produit.prix_unite
 
   async function reserver(e) {
     e.preventDefault()
@@ -47,19 +48,22 @@ export default function CarteProduit({ produit }) {
           Se connecter pour réserver
         </Link>
       ) : (
-        <form className="reserver" onSubmit={reserver}>
-          <input
-            type="number"
-            min="1"
-            max={produit.quantite_disponible}
-            value={quantite}
-            onChange={(e) => setQuantite(e.target.value)}
-            aria-label="Quantité à réserver"
-          />
-          <button type="submit" disabled={enCours}>
-            {enCours ? '…' : 'Réserver'}
-          </button>
-        </form>
+        <>
+          <form className="reserver" onSubmit={reserver}>
+            <input
+              type="number"
+              min="1"
+              max={produit.quantite_disponible}
+              value={quantite}
+              onChange={(e) => setQuantite(e.target.value)}
+              aria-label="Quantité à réserver"
+            />
+            <button type="submit" disabled={enCours}>
+              {enCours ? '…' : 'Réserver'}
+            </button>
+          </form>
+          {total > 0 && <p className="detail">Total : {total.toFixed(2)} €</p>}
+        </>
       )}
 
       {message && <p className="succes">{message}</p>}

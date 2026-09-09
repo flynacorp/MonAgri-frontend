@@ -13,6 +13,7 @@ const enListe = (texte) =>
 function LigneParcelle({ parcelle, onChangement }) {
   const [edition, setEdition] = useState(false)
   const [surface, setSurface] = useState(parcelle.surface_m2)
+  const [prixM2, setPrixM2] = useState(parcelle.prix_m2 ?? '')
   const [typeSol, setTypeSol] = useState(parcelle.type_sol ?? '')
   const [region, setRegion] = useState(parcelle.region ?? '')
   const [statut, setStatut] = useState(parcelle.statut)
@@ -23,6 +24,7 @@ function LigneParcelle({ parcelle, onChangement }) {
 
   function ouvrirEdition() {
     setSurface(parcelle.surface_m2)
+    setPrixM2(parcelle.prix_m2 ?? '')
     setTypeSol(parcelle.type_sol ?? '')
     setRegion(parcelle.region ?? '')
     setStatut(parcelle.statut)
@@ -41,6 +43,7 @@ function LigneParcelle({ parcelle, onChangement }) {
         method: 'PATCH',
         body: {
           surface_m2: Number(surface),
+          prix_m2: Number(prixM2),
           type_sol: typeSol.trim() || null,
           region: region.trim() || null,
           statut,
@@ -73,7 +76,7 @@ function LigneParcelle({ parcelle, onChangement }) {
         <span>
           <strong>{parcelle.surface_m2} m²</strong>{' '}
           <span className="detail">
-            ({parcelle.surface_restante ?? parcelle.surface_m2} m² dispo)
+            ({parcelle.surface_restante ?? parcelle.surface_m2} m² dispo · {parcelle.prix_m2} €/m²)
           </span>
           {parcelle.type_sol ? ` · sol ${parcelle.type_sol}` : ''}
           {parcelle.region ? ` · ${parcelle.region}` : ''} · {parcelle.statut}
@@ -102,6 +105,15 @@ function LigneParcelle({ parcelle, onChangement }) {
           min="1"
           value={surface}
           onChange={(e) => setSurface(e.target.value)}
+          required
+        />
+        <input
+          type="number"
+          step="0.01"
+          min="0"
+          placeholder="Prix / m² (€)"
+          value={prixM2}
+          onChange={(e) => setPrixM2(e.target.value)}
           required
         />
         <input
@@ -146,6 +158,7 @@ function LigneParcelle({ parcelle, onChangement }) {
 
 export default function GestionParcelles({ parcelles, onChangement }) {
   const [surface, setSurface] = useState('')
+  const [prixM2, setPrixM2] = useState('')
   const [typeSol, setTypeSol] = useState('')
   const [region, setRegion] = useState('')
   const [cultures, setCultures] = useState('')
@@ -162,6 +175,7 @@ export default function GestionParcelles({ parcelles, onChangement }) {
         method: 'POST',
         body: {
           surface_m2: Number(surface),
+          prix_m2: Number(prixM2),
           type_sol: typeSol.trim() || undefined,
           region: region.trim() || undefined,
           cultures_autorisees: enListe(cultures),
@@ -169,6 +183,7 @@ export default function GestionParcelles({ parcelles, onChangement }) {
         },
       })
       setSurface('')
+      setPrixM2('')
       setTypeSol('')
       setRegion('')
       setCultures('')
@@ -192,6 +207,15 @@ export default function GestionParcelles({ parcelles, onChangement }) {
           placeholder="Surface (m²)"
           value={surface}
           onChange={(e) => setSurface(e.target.value)}
+          required
+        />
+        <input
+          type="number"
+          step="0.01"
+          min="0"
+          placeholder="Prix / m² (€)"
+          value={prixM2}
+          onChange={(e) => setPrixM2(e.target.value)}
           required
         />
         <input

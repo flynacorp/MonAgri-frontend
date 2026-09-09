@@ -11,11 +11,11 @@ function LigneResa({ type, resa, libelle, complement, onChangement }) {
   const [erreur, setErreur] = useState(null)
   const [enCours, setEnCours] = useState(false)
 
-  async function traiter(statut) {
+  async function patch(corps) {
     setErreur(null)
     setEnCours(true)
     try {
-      await api(`/reservations-${type}/${resa.id}`, { method: 'PATCH', body: { statut } })
+      await api(`/reservations-${type}/${resa.id}`, { method: 'PATCH', body: corps })
       onChangement()
     } catch (err) {
       setErreur(err.message)
@@ -28,26 +28,53 @@ function LigneResa({ type, resa, libelle, complement, onChangement }) {
       <span>
         <strong>{libelle}</strong>
         {complement}
+        {resa.prix != null && ` · ${Number(resa.prix).toFixed(2)} €`}
       </span>
 
       {resa.statut === 'en_attente' ? (
         <span className="actions">
-          <button type="button" disabled={enCours} onClick={() => traiter('confirmee')}>
+          <button type="button" disabled={enCours} onClick={() => patch({ statut: 'confirmee' })}>
             Accepter
           </button>
           <button
             type="button"
             className="lien danger"
             disabled={enCours}
-            onClick={() => traiter('annulee')}
+            onClick={() => patch({ statut: 'annulee' })}
           >
             Refuser
           </button>
         </span>
       ) : (
-        <span className={`badge badge-${resa.statut}`}>
-          {LIBELLE_STATUT[resa.statut] ?? resa.statut}
+        <span className="actions">
+          <span className={`badge badge-${resa.statut}`}>
+            {LIBELLE_STATUT[resa.statut] ?? resa.statut}
+          </span>
+          {resa.statut === 'confirmee' && (
+            <button
+              type="button"
+              className="lien"
+              disabled={enCours}
+              onClick={() => patch({ paye: !resa.paye })}
+            >
+              {resa.paye ? 'Marquer non payé' : 'Marquer payé'}
+            </button>
+          )}
         </span>
+      )}
+
+      {type === 'parcelles' && resa.statut === 'confirmee' && (
+        <label className="recolte">
+          Récolte prévue
+          <input
+            type="date"
+            defaultValue={resa.date_recolte ?? ''}
+            onBlur={(e) => {
+              const v = e.target.value || null
+              if (v !== (resa.date_recolte ?? null)) patch({ date_recolte: v })
+            }}
+          />
+        </label>
       )}
 
       {erreur && <p className="erreur">{erreur}</p>}
