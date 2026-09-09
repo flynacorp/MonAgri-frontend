@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { api } from '../lib/api'
 import CarteParcelle from '../components/CarteParcelle'
 
@@ -7,12 +7,16 @@ export default function Parcelles() {
   const [erreur, setErreur] = useState(null)
   const [chargement, setChargement] = useState(true)
 
-  useEffect(() => {
-    api('/parcelles')
+  const charger = useCallback(() => {
+    return api('/parcelles')
       .then(setParcelles)
       .catch((e) => setErreur(e.message))
       .finally(() => setChargement(false))
   }, [])
+
+  useEffect(() => {
+    charger()
+  }, [charger])
 
   if (chargement) return <p>Chargement…</p>
   if (erreur) return <p className="erreur">{erreur}</p>
@@ -25,7 +29,7 @@ export default function Parcelles() {
       ) : (
         <ul className="cartes">
           {parcelles.map((p) => (
-            <CarteParcelle key={p.id} parcelle={p} />
+            <CarteParcelle key={p.id} parcelle={p} onReservation={charger} />
           ))}
         </ul>
       )}

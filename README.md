@@ -70,8 +70,13 @@ src/
 
 - [x] Listes publiques produits & parcelles
 - [x] Connexion / inscription / déconnexion
-- [x] Réserver un produit (quantité) et une parcelle (date de début, culture)
+- [x] Réserver un produit (quantité)
+- [x] **Parcelle partagée** : réserver une portion en m² + une culture (choisie
+      dans les cultures autorisées) + date ; la carte affiche la surface restante
 - [x] « Mes réservations » (produits + parcelles, avec statut et détails)
 - [x] Espace agriculteur : devenir agriculteur ; créer / **modifier** / retirer
-      ses produits et parcelles ; accepter / refuser les réservations reçues
+      ses produits et parcelles (dont `cultures_autorisees`, `max_m2_par_client`) ;
+      accepter / refuser les réservations reçues
+- [ ] Phase B : date de récolte, prix, statut « payé », règles d'annulation
+- [ ] Phase C : photos (Supabase Storage)
 - [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)

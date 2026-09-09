@@ -77,8 +77,9 @@ export default function MesReservations() {
           {rpar.map((r) => (
             <li key={r.id}>
               <strong>{nomParcelle(r.parcelle_id)}</strong>
-              {r.date_debut ? ` — dès le ${r.date_debut}` : ''}
+              {r.surface_reservee ? ` — ${r.surface_reservee} m²` : ''}
               {r.culture_demandee ? ` · ${r.culture_demandee}` : ''}
+              {r.date_debut ? ` · dès le ${r.date_debut}` : ''}
               <span className={`badge badge-${r.statut}`}>
                 {LIBELLE_STATUT[r.statut] ?? r.statut}
               </span>
