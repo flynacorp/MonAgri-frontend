@@ -96,7 +96,7 @@ src/
       **responsive** (barre d'onglets en bas sur mobile)
 - [x] **PWA** : installable sur mobile (`vite-plugin-pwa`) — manifeste, icône,
       service worker qui met en cache la coquille de l'appli
-- [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)
+- [ ] Déploiement sur Vercel (config prête : [`vercel.json`](vercel.json))
 
 ## Direction visuelle
 
@@ -119,3 +119,22 @@ Pour tester : `npm run build && npm run preview`, puis dans le navigateur
 
 Les icônes (`public/pwa-*.png`, `apple-touch-icon.png`) sont générées à partir
 d'un dessin de feuille par `npm run icones` (`scripts/generer-icones.mjs`).
+
+## Déploiement (Vercel)
+
+[`vercel.json`](vercel.json) est prêt : réécriture SPA (toutes les routes → 
+`index.html`, pour react-router) + en-tête anti-cache sur `sw.js`.
+
+Sur [vercel.com](https://vercel.com) : **Add New → Project**, importer ce dépôt.
+Vercel détecte Vite tout seul (`npm run build`, sortie `dist/`). Renseigner les
+variables d'environnement :
+
+| Variable | Valeur |
+|----------|--------|
+| `VITE_SUPABASE_URL` | URL du projet Supabase |
+| `VITE_SUPABASE_ANON_KEY` | clé publishable / anon |
+| `VITE_API_URL` | URL du backend Render, **sans slash final** |
+
+Après le 1er déploiement : reporter l'URL Vercel dans `CORS_ORIGINS` côté
+backend, puis dans **Supabase → Authentication → URL Configuration**
+(Site URL + Redirect URLs).
