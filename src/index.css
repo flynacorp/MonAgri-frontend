@@ -1,14 +1,33 @@
-:root {
-  --vert: #2e7d32;
-  --vert-fonce: #1b5e20;
-  --gris: #666;
-  --bordure: #e0e0e0;
-  --fond: #fafafa;
-  --rouge: #c62828;
+/* MonAgri — direction visuelle « Terroir »
+   Vert olive doux, papier crème, titres à empattement, produits mis en avant. */
 
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  color: #1a1a1a;
-  background: var(--fond);
+:root {
+  /* Couleurs */
+  --paper: #f7f2e7; /* fond de page */
+  --surface: #fffdf7; /* cartes, en-tête */
+  --ink: #2c2a22; /* texte principal */
+  --ink-soft: #6f6a58; /* texte secondaire */
+  --olive: #68724f; /* couleur principale (boutons, liens actifs) */
+  --olive-fonce: #3f4733; /* titres, survol */
+  --olive-pale: #eceada; /* fonds discrets */
+  --ocre: #a9762f; /* prix, étoiles */
+  --argile: #a9552f; /* accent rare, survol de lien */
+  --sable: #e4d9c0; /* bordures */
+  --rouge: #a5402c; /* erreurs, actions destructives */
+
+  /* Formes */
+  --rayon: 10px;
+  --rayon-s: 8px;
+  --ombre: 0 1px 2px rgba(63, 71, 51, 0.05), 0 10px 26px rgba(63, 71, 51, 0.07);
+
+  /* Typographies */
+  --serif: "Zilla Slab", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --sans: "Karla", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--paper);
+  line-height: 1.55;
 }
 
 * {
@@ -17,60 +36,133 @@
 
 body {
   margin: 0;
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--serif);
+  color: var(--olive-fonce);
+  line-height: 1.15;
+  margin: 0 0 0.6rem;
+}
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
 }
 
 a {
-  color: var(--vert-fonce);
+  color: var(--olive-fonce);
   text-decoration: none;
 }
 a:hover {
-  text-decoration: underline;
+  color: var(--argile);
 }
+
+p {
+  margin: 0 0 0.4rem;
+}
+
+/* Texte secondaire (précisions, dates, mentions) */
+.detail {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+/* --- Boutons --- */
 
 button {
   font: inherit;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid var(--vert);
-  background: var(--vert);
-  color: #fff;
-  border-radius: 6px;
+  font-weight: 700;
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--olive);
+  background: var(--olive);
+  color: #fdfcf5;
+  border-radius: var(--rayon-s);
   cursor: pointer;
+  transition: background 0.15s;
 }
 button:hover {
-  background: var(--vert-fonce);
+  background: var(--olive-fonce);
+  border-color: var(--olive-fonce);
 }
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: default;
 }
+
+/* Bouton secondaire : contour seulement */
+button.secondaire {
+  background: transparent;
+  color: var(--olive-fonce);
+}
+button.secondaire:hover {
+  background: var(--olive-pale);
+}
+
+/* Bouton présenté comme un lien */
 button.lien,
 label.lien {
   background: none;
   border: none;
-  color: var(--vert-fonce);
+  color: var(--olive-fonce);
   padding: 0;
+  font: inherit;
   text-decoration: underline;
   cursor: pointer;
-  font: inherit;
+}
+button.lien:hover,
+label.lien:hover {
+  background: none;
+  color: var(--argile);
+}
+button.lien.danger {
+  color: var(--rouge);
 }
 
 /* --- Mise en page --- */
 
+.app {
+  min-height: 100vh;
+}
+
 .entete {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1.6rem;
   padding: 0.9rem 1.5rem;
-  background: #fff;
-  border-bottom: 1px solid var(--bordure);
+  background: var(--surface);
+  border-bottom: 1px solid var(--sable);
 }
 .entete .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--serif);
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: 1.2rem;
+  color: var(--olive-fonce);
+}
+.entete .logo svg {
+  color: var(--olive);
 }
 .entete nav {
   display: flex;
-  gap: 1rem;
+  gap: 1.1rem;
+  font-weight: 500;
+}
+.entete nav a.actif {
+  color: var(--argile);
 }
 .entete .compte {
   margin-left: auto;
@@ -79,18 +171,71 @@ label.lien {
   gap: 0.8rem;
 }
 .entete .email {
-  color: var(--gris);
+  max-width: 14rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--ink-soft);
   font-size: 0.9rem;
 }
 
 .contenu {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 2rem 1.5rem 4rem;
 }
 
-h1 {
-  margin-top: 0;
+/* --- Barre de navigation du bas (mobile) --- */
+
+.bottom-nav {
+  display: none;
+}
+
+/* --- Bandeau d'accueil --- */
+
+.hero {
+  background: var(--olive-pale);
+  background-image: radial-gradient(circle at 1px 1px, rgba(63, 71, 51, 0.06) 1px, transparent 0);
+  background-size: 20px 20px;
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon);
+  padding: 2.2rem 2rem;
+  margin-bottom: 1.8rem;
+}
+.hero h1 {
+  font-size: 2.3rem;
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+.hero p {
+  font-size: 1.1rem;
+  color: var(--ink-soft);
+  max-width: 48ch;
+  margin: 0;
+}
+
+.barre-recherche {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.3rem;
+  padding: 0.7rem 1rem;
+  background: var(--surface);
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  max-width: 460px;
+}
+.barre-recherche svg {
+  color: var(--ink-soft);
+  flex: none;
+}
+.barre-recherche input {
+  border: none;
+  background: none;
+  font: inherit;
+  width: 100%;
+  outline: none;
+  color: var(--ink);
 }
 
 /* --- Listes de cartes --- */
@@ -100,64 +245,91 @@ h1 {
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.2rem;
 }
 .carte {
-  background: #fff;
-  border: 1px solid var(--bordure);
-  border-radius: 8px;
-  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon);
+  padding: 1.1rem 1.15rem 1.15rem;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 .carte-photo {
   display: block;
-  width: calc(100% + 2rem);
-  height: 140px;
+  width: calc(100% + 2.3rem);
+  height: 150px;
   object-fit: cover;
-  margin: -1rem -1rem 0.8rem;
+  margin: -1.1rem -1.15rem 0.9rem;
 }
 .carte h3 {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.3rem;
 }
 .carte .prix {
-  color: var(--vert-fonce);
-  font-weight: 600;
-  margin: 0.2rem 0;
+  font-family: var(--serif);
+  font-weight: 700;
+  color: var(--ocre);
+  font-size: 1.25rem;
+  margin: 0.1rem 0;
+}
+.carte .prix span {
+  font-family: var(--sans);
+  font-weight: 500;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
 }
 .carte .detail {
-  color: var(--gris);
+  color: var(--ink-soft);
   font-size: 0.9rem;
-  margin: 0.2rem 0;
+  margin: 0.15rem 0;
 }
 .carte .statut {
-  display: inline-block;
+  align-self: flex-start;
   margin-top: 0.5rem;
-  font-size: 0.8rem;
-  padding: 0.15rem 0.5rem;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.6rem;
   border-radius: 999px;
-  background: var(--fond);
-  border: 1px solid var(--bordure);
+  background: var(--olive-pale);
+  border: 1px solid var(--sable);
+  color: var(--ink-soft);
+}
+.carte .vendeur {
+  margin: 0.8rem 0 0;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--sable);
+  font-size: 0.86rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.carte .note-mini {
+  color: var(--ocre);
+  font-weight: 600;
+  white-space: nowrap;
 }
 
-/* --- Réservation depuis une carte produit --- */
+/* --- Réservation depuis une carte --- */
 
 .reserver {
   display: flex;
   gap: 0.5rem;
-  margin-top: 0.6rem;
+  align-items: center;
+  margin-top: 0.7rem;
 }
 .reserver input {
-  width: 4rem;
+  width: 4.2rem;
   font: inherit;
-  padding: 0.4rem;
-  border: 1px solid var(--bordure);
-  border-radius: 6px;
+  padding: 0.45rem;
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--paper);
 }
 .reserver button {
-  padding: 0.4rem 0.7rem;
+  padding: 0.5rem 0.8rem;
 }
-
 .reserver-parcelle {
   flex-direction: column;
   align-items: stretch;
@@ -166,20 +338,27 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
-  font-size: 0.85rem;
-  color: var(--gris);
+  font-size: 0.82rem;
+  color: var(--ink-soft);
 }
-.reserver-parcelle input {
+.reserver-parcelle input,
+.reserver-parcelle select {
   width: 100%;
+  font: inherit;
+  padding: 0.5rem;
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--paper);
+  color: var(--ink);
 }
 
 .succes {
-  color: var(--vert-fonce);
-  font-size: 0.9rem;
+  color: var(--olive-fonce);
+  font-size: 0.88rem;
   margin: 0.4rem 0 0;
 }
 
-/* --- Page « Mes réservations » --- */
+/* --- Page « Mes réservations » & listes de gestion --- */
 
 .liste-resa {
   list-style: none;
@@ -191,8 +370,8 @@ h1 {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.6rem;
-  padding: 0.7rem 0;
-  border-bottom: 1px solid var(--bordure);
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--sable);
 }
 .liste-resa li > form {
   flex: 1 1 100%;
@@ -207,13 +386,68 @@ h1 {
   align-items: center;
   gap: 0.5rem;
   font-size: 0.85rem;
-  color: var(--gris);
+  color: var(--ink-soft);
 }
 .liste-resa .recolte input {
   font: inherit;
-  padding: 0.3rem 0.5rem;
-  border: 1px solid var(--bordure);
-  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--paper);
+}
+.liste-resa .actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.liste-resa .actions button {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+/* --- Étiquettes de statut --- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+.badge-en_attente {
+  background: #f6efdd;
+  border-color: #e7d7a8;
+  color: #8a6d1f;
+}
+.badge-en_attente::before {
+  background: #c99a2e;
+}
+.badge-confirmee {
+  background: #e7ecdd;
+  border-color: #c2cfa6;
+  color: #4a5a30;
+}
+.badge-confirmee::before {
+  background: var(--olive);
+}
+.badge-annulee {
+  background: #f3e2da;
+  border-color: #e2c4b3;
+  color: #98462a;
+}
+.badge-annulee::before {
+  background: var(--argile);
 }
 
 /* --- Photos --- */
@@ -222,8 +456,8 @@ h1 {
   width: 64px;
   height: 64px;
   object-fit: cover;
-  border-radius: 6px;
-  border: 1px solid var(--bordure);
+  border-radius: var(--rayon-s);
+  border: 1px solid var(--sable);
 }
 .liste-resa .miniature {
   flex: 0 0 auto;
@@ -237,56 +471,71 @@ h1 {
   font-size: 0.85rem;
 }
 
-/* --- Vendeur / fiche agriculteur --- */
+/* --- Fiche publique d'un agriculteur --- */
 
-.carte .vendeur {
-  margin: 0.6rem 0 0;
-  padding-top: 0.6rem;
-  border-top: 1px solid var(--bordure);
-  font-size: 0.85rem;
+.fiche-agri h2 {
+  margin-top: 2.2rem;
 }
-
 .fiche-entete {
   display: flex;
-  gap: 1.2rem;
+  gap: 1.4rem;
   align-items: center;
   margin: 1rem 0;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--sable);
 }
 .fiche-photo {
-  width: 96px;
-  height: 96px;
+  width: 104px;
+  height: 104px;
   object-fit: cover;
   border-radius: 50%;
-  border: 1px solid var(--bordure);
+  border: 1px solid var(--sable);
+  flex: none;
 }
 .fiche-entete h1 {
   margin: 0 0 0.2rem;
 }
 .fiche-bio {
   white-space: pre-wrap;
-  max-width: 55ch;
-}
-.fiche-agri h2 {
-  margin-top: 2rem;
+  max-width: 60ch;
+  font-size: 1.05rem;
+  margin: 1.4rem 0;
 }
 
 /* --- Étoiles & avis --- */
 
 .etoiles {
-  color: #f5a623;
-  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--ocre);
+  vertical-align: middle;
+}
+.etoiles svg {
+  width: 1em;
+  height: 1em;
+}
+.etoiles-choix {
+  gap: 4px;
 }
 .etoiles-choix button {
   background: none;
   border: none;
   padding: 0;
-  font-size: 1.4rem;
-  color: #f5a623;
   cursor: pointer;
-  line-height: 1;
+  color: var(--ocre);
+  line-height: 0;
+}
+.etoiles-choix button:hover {
+  background: none;
+}
+.etoiles-choix button svg {
+  width: 1.7rem;
+  height: 1.7rem;
 }
 .note-mini {
-  color: var(--gris);
+  color: var(--ocre);
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -296,21 +545,23 @@ h1 {
 .form-avis {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 0.7rem;
   align-items: flex-start;
   max-width: 480px;
   margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: #fff;
-  border: 1px solid var(--bordure);
-  border-radius: 8px;
+  padding: 1.1rem 1.2rem;
+  background: var(--surface);
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon);
 }
 .form-avis textarea {
   width: 100%;
   font: inherit;
-  padding: 0.5rem;
-  border: 1px solid var(--bordure);
-  border-radius: 6px;
+  padding: 0.55rem;
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--paper);
+  color: var(--ink);
 }
 .form-avis .actions {
   display: flex;
@@ -324,8 +575,8 @@ h1 {
   margin: 0;
 }
 .liste-avis li {
-  padding: 0.8rem 0;
-  border-bottom: 1px solid var(--bordure);
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--sable);
 }
 .liste-avis li p {
   margin: 0.3rem 0 0;
@@ -333,7 +584,11 @@ h1 {
 .avis-tete {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
+}
+.avis-tete strong {
+  font-family: var(--serif);
+  color: var(--olive-fonce);
 }
 
 /* --- Mon profil --- */
@@ -351,60 +606,28 @@ h1 {
   flex-direction: column;
   gap: 0.3rem;
   font-size: 0.9rem;
+  color: var(--ink-soft);
 }
 .mon-profil input,
 .mon-profil textarea {
   font: inherit;
-  padding: 0.5rem;
-  border: 1px solid var(--bordure);
-  border-radius: 6px;
+  padding: 0.55rem;
+  color: var(--ink);
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--surface);
 }
-.mon-profil button[type='submit'] {
+.mon-profil button[type="submit"] {
   align-self: flex-start;
 }
 .photo-profil {
   margin-top: 2rem;
 }
-.badge {
-  margin-left: auto;
-  font-size: 0.75rem;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  border: 1px solid var(--bordure);
-  white-space: nowrap;
-}
-.badge-en_attente {
-  background: #fff8e1;
-  border-color: #ffe082;
-}
-.badge-confirmee {
-  background: #e8f5e9;
-  border-color: #a5d6a7;
-}
-.badge-annulee {
-  background: #ffebee;
-  border-color: #ef9a9a;
-}
-
-.liste-resa .actions {
-  margin-left: auto;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-.liste-resa .actions button {
-  padding: 0.3rem 0.7rem;
-  font-size: 0.85rem;
-}
-
-button.lien.danger {
-  color: var(--rouge);
-}
 
 /* --- Espace agriculteur --- */
 
 .espace-agri > section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 2.6rem;
 }
 .form-annonce {
   display: flex;
@@ -416,19 +639,20 @@ button.lien.danger {
 .form-annonce input,
 .form-annonce select {
   font: inherit;
-  padding: 0.45rem 0.6rem;
-  border: 1px solid var(--bordure);
-  border-radius: 6px;
-  background: #fff;
+  padding: 0.5rem 0.6rem;
+  color: var(--ink);
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--surface);
 }
-.form-annonce input[type='number'] {
+.form-annonce input[type="number"] {
   width: 9rem;
 }
 
-/* --- Formulaire de connexion --- */
+/* --- Connexion --- */
 
 .connexion {
-  max-width: 340px;
+  max-width: 360px;
 }
 .connexion form {
   display: flex;
@@ -440,12 +664,15 @@ button.lien.danger {
   flex-direction: column;
   gap: 0.3rem;
   font-size: 0.9rem;
+  color: var(--ink-soft);
 }
 .connexion input {
   font: inherit;
-  padding: 0.5rem;
-  border: 1px solid var(--bordure);
-  border-radius: 6px;
+  padding: 0.55rem;
+  color: var(--ink);
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--surface);
 }
 .connexion .lien {
   margin-top: 1rem;
@@ -453,4 +680,83 @@ button.lien.danger {
 
 .erreur {
   color: var(--rouge);
+}
+
+/* --- Mobile --- */
+
+@media (max-width: 768px) {
+  .entete {
+    gap: 0.8rem;
+    padding: 0.8rem 1rem;
+  }
+  .entete nav {
+    display: none; /* remplacé par la barre du bas */
+  }
+  .entete .compte button {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.85rem;
+  }
+
+  .contenu {
+    padding: 1.4rem 1rem calc(5rem + env(safe-area-inset-bottom));
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+  .hero {
+    padding: 1.6rem 1.3rem;
+  }
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  .barre-recherche {
+    max-width: none;
+  }
+
+  .fiche-entete {
+    gap: 1rem;
+  }
+  .fiche-photo {
+    width: 84px;
+    height: 84px;
+  }
+
+  .liste-resa .actions {
+    margin-left: 0;
+    flex: 1 1 100%;
+  }
+
+  .bottom-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--surface);
+    border-top: 1px solid var(--sable);
+    padding: 0.4rem 0.3rem calc(0.4rem + env(safe-area-inset-bottom));
+    z-index: 20;
+  }
+  .bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+    padding: 0.35rem 0;
+  }
+  .bottom-nav a.actif {
+    color: var(--olive-fonce);
+  }
+  .bottom-nav a:hover {
+    color: var(--olive-fonce);
+  }
+  .bottom-nav svg {
+    width: 22px;
+    height: 22px;
+  }
 }

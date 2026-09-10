@@ -51,14 +51,15 @@ export default function CarteParcelle({ parcelle, onReservation }) {
         <img src={parcelle.photo_url} alt="" className="carte-photo" />
       )}
       <h3>{parcelle.surface_m2} m²</h3>
+      <p className="prix">
+        {prixM2} € <span>/ m²</span>
+      </p>
       <p className="detail">
         {parcelle.type_sol ? `Sol ${parcelle.type_sol}` : 'Sol non précisé'}
         {parcelle.region ? ` · ${parcelle.region}` : ''}
       </p>
       <p className="detail">
         <strong>{restante} m²</strong> encore disponibles sur {parcelle.surface_m2}
-        {' · '}
-        {prixM2} € / m²
       </p>
       {cultures.length > 0 && (
         <p className="detail">Cultures : {cultures.join(', ')}</p>

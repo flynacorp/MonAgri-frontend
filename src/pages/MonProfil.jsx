@@ -58,6 +58,14 @@ export default function MonProfil() {
     <section className="mon-profil">
       <h1>Mon profil</h1>
 
+      <p>
+        <Link to="/espace-agriculteur">
+          {estAgriculteur
+            ? 'Gérer mes annonces (espace agriculteur) →'
+            : 'Devenir agriculteur →'}
+        </Link>
+      </p>
+
       {estAgriculteur && (
         <p>
           <Link to={`/agriculteurs/${utilisateur.id}`}>Voir ma fiche publique →</Link>

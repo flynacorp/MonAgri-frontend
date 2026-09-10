@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import Layout from './components/Layout'
 import Produits from './pages/Produits'
 import Parcelles from './pages/Parcelles'
@@ -19,7 +19,18 @@ export default function App() {
         <Route path="/mon-profil" element={<MonProfil />} />
         <Route path="/agriculteurs/:id" element={<ProfilAgriculteur />} />
         <Route path="/connexion" element={<Connexion />} />
-        <Route path="*" element={<p>Page introuvable.</p>} />
+        <Route
+          path="*"
+          element={
+            <section>
+              <h1>Page introuvable</h1>
+              <p>Cette page n'existe pas ou a été déplacée.</p>
+              <p>
+                <Link to="/">← Retour au marché</Link>
+              </p>
+            </section>
+          }
+        />
       </Routes>
     </Layout>
   )

@@ -35,7 +35,9 @@ export default function CarteProduit({ produit }) {
   return (
     <li className="carte">
       <h3>{produit.nom}</h3>
-      <p className="prix">{produit.prix_unite} € / unité</p>
+      <p className="prix">
+        {produit.prix_unite} € <span>/ unité</span>
+      </p>
       <p className="detail">
         {produit.quantite_disponible} disponible(s)
         {produit.region ? ` · ${produit.region}` : ''}
