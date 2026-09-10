@@ -88,5 +88,7 @@ src/
       (agriculteur) ; affichées sur les cartes et dans « Mes réservations »
 - [x] **E1** : fiche publique agriculteur (nom de ferme, bio, photo, région) ;
       page « Mon profil » pour l'éditer ; lien « vendu par… » sur chaque carte
-- [ ] E2 : notes & avis (client ayant eu une réservation confirmée)
+- [x] **E2** : notes & avis — seul un client ayant eu une réservation confirmée
+      avec l'agriculteur peut le noter ; note moyenne affichée dans l'en-tête de
+      la fiche et sur les cartes produit / parcelle
 - [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)
