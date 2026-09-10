@@ -43,12 +43,15 @@ button:disabled {
   opacity: 0.6;
   cursor: default;
 }
-button.lien {
+button.lien,
+label.lien {
   background: none;
   border: none;
   color: var(--vert-fonce);
   padding: 0;
   text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
 }
 
 /* --- Mise en page --- */
@@ -105,6 +108,14 @@ h1 {
   border: 1px solid var(--bordure);
   border-radius: 8px;
   padding: 1rem;
+  overflow: hidden;
+}
+.carte-photo {
+  display: block;
+  width: calc(100% + 2rem);
+  height: 140px;
+  object-fit: cover;
+  margin: -1rem -1rem 0.8rem;
 }
 .carte h3 {
   margin: 0 0 0.4rem;
@@ -203,6 +214,27 @@ h1 {
   padding: 0.3rem 0.5rem;
   border: 1px solid var(--bordure);
   border-radius: 6px;
+}
+
+/* --- Photos --- */
+
+.miniature {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--bordure);
+}
+.liste-resa .miniature {
+  flex: 0 0 auto;
+}
+.upload-photo {
+  flex: 1 1 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
 }
 .badge {
   margin-left: auto;

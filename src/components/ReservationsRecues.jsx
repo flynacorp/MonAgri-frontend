@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { api } from '../lib/api'
+import UploadPhoto from './UploadPhoto'
 
 const LIBELLE_STATUT = {
   en_attente: 'En attente',
@@ -64,17 +65,24 @@ function LigneResa({ type, resa, libelle, complement, onChangement }) {
       )}
 
       {type === 'parcelles' && resa.statut === 'confirmee' && (
-        <label className="recolte">
-          Récolte prévue
-          <input
-            type="date"
-            defaultValue={resa.date_recolte ?? ''}
-            onBlur={(e) => {
-              const v = e.target.value || null
-              if (v !== (resa.date_recolte ?? null)) patch({ date_recolte: v })
-            }}
+        <>
+          <label className="recolte">
+            Récolte prévue
+            <input
+              type="date"
+              defaultValue={resa.date_recolte ?? ''}
+              onBlur={(e) => {
+                const v = e.target.value || null
+                if (v !== (resa.date_recolte ?? null)) patch({ date_recolte: v })
+              }}
+            />
+          </label>
+          <UploadPhoto
+            dossier={`cultures/${resa.id}`}
+            urlActuelle={resa.photo_culture_url}
+            onUpload={(url) => patch({ photo_culture_url: url })}
           />
-        </label>
+        </>
       )}
 
       {erreur && <p className="erreur">{erreur}</p>}

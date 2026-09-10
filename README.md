@@ -43,8 +43,9 @@ src/
   components/
     Layout.jsx       en-tête + navigation + état de connexion
   components/
+    UploadPhoto.jsx       envoi d'image vers Supabase Storage + aperçu
     CarteProduit.jsx      carte + formulaire de réservation (quantité)
-    CarteParcelle.jsx     carte + formulaire de réservation (date, culture)
+    CarteParcelle.jsx     carte (+ photo) + formulaire de réservation (m², culture, date)
     GestionProduits.jsx   agriculteur : ajouter / modifier / retirer ses produits
     GestionParcelles.jsx  idem pour les parcelles (+ statut disponible/reservee)
     ReservationsRecues.jsx  agriculteur : accepter / refuser les réservations reçues
@@ -80,5 +81,7 @@ src/
 - [x] **Phase B** : prix des réservations (affiché + figé), statut « payé »
       (l'agriculteur le coche), date de récolte (l'agriculteur la pose), le
       client peut annuler sa réservation tant qu'elle est en attente
-- [ ] Phase C : photos (Supabase Storage)
+- [x] **Phase C** : photos via Supabase Storage — photo de la parcelle
+      (agriculteur), photo de la culture en cours sur une réservation confirmée
+      (agriculteur) ; affichées sur les cartes et dans « Mes réservations »
 - [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)

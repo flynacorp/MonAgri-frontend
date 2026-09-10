@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { api } from '../lib/api'
+import UploadPhoto from './UploadPhoto'
 
 const STATUTS = ['disponible', 'reservee']
 
@@ -92,6 +93,14 @@ function LigneParcelle({ parcelle, onChangement }) {
             Retirer
           </button>
         </span>
+        <UploadPhoto
+          dossier={`parcelles/${parcelle.id}`}
+          urlActuelle={parcelle.photo_url}
+          onUpload={async (url) => {
+            await api(`/parcelles/${parcelle.id}`, { method: 'PATCH', body: { photo_url: url } })
+            onChangement()
+          }}
+        />
         {erreur && <p className="erreur">{erreur}</p>}
       </li>
     )

@@ -50,6 +50,10 @@ function LigneMaResa({ type, resa, libelle, complement, onChangement }) {
         )}
       </span>
 
+      {resa.photo_culture_url && (
+        <img src={resa.photo_culture_url} alt="Culture en cours" className="miniature" />
+      )}
+
       {erreur && <p className="erreur">{erreur}</p>}
     </li>
   )

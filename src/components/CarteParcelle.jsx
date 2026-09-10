@@ -47,6 +47,9 @@ export default function CarteParcelle({ parcelle, onReservation }) {
 
   return (
     <li className="carte">
+      {parcelle.photo_url && (
+        <img src={parcelle.photo_url} alt="" className="carte-photo" />
+      )}
       <h3>{parcelle.surface_m2} m²</h3>
       <p className="detail">
         {parcelle.type_sol ? `Sol ${parcelle.type_sol}` : 'Sol non précisé'}
