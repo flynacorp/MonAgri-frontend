@@ -74,6 +74,12 @@ export default function CarteProduit({ produit }) {
           <Link to={`/agriculteurs/${produit.agriculteur_id}`}>
             {produit.agriculteur_ferme || produit.agriculteur_nom || 'Voir le vendeur'} →
           </Link>
+          {produit.agriculteur_nombre_avis > 0 && (
+            <span className="note-mini">
+              {' '}
+              ★ {produit.agriculteur_note} ({produit.agriculteur_nombre_avis})
+            </span>
+          )}
         </p>
       )}
     </li>

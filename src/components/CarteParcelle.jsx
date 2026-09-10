@@ -127,6 +127,12 @@ export default function CarteParcelle({ parcelle, onReservation }) {
           <Link to={`/agriculteurs/${parcelle.agriculteur_id}`}>
             {parcelle.agriculteur_ferme || parcelle.agriculteur_nom || 'Voir le propriétaire'} →
           </Link>
+          {parcelle.agriculteur_nombre_avis > 0 && (
+            <span className="note-mini">
+              {' '}
+              ★ {parcelle.agriculteur_note} ({parcelle.agriculteur_nombre_avis})
+            </span>
+          )}
         </p>
       )}
     </li>

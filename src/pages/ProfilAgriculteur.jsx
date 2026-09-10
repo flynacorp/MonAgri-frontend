@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { api } from '../lib/api'
 import CarteProduit from '../components/CarteProduit'
 import CarteParcelle from '../components/CarteParcelle'
+import Etoiles from '../components/Etoiles'
+import AvisAgriculteur from '../components/AvisAgriculteur'
 
 export default function ProfilAgriculteur() {
   const { id } = useParams()
@@ -10,18 +12,21 @@ export default function ProfilAgriculteur() {
   const [erreur, setErreur] = useState(null)
   const [chargement, setChargement] = useState(true)
 
-  useEffect(() => {
-    setChargement(true)
-    api(`/agriculteurs/${id}`)
+  const charger = useCallback(() => {
+    return api(`/agriculteurs/${id}`)
       .then(setFiche)
       .catch((e) => setErreur(e.message))
       .finally(() => setChargement(false))
   }, [id])
 
+  useEffect(() => {
+    charger()
+  }, [charger])
+
   if (chargement) return <p>Chargement…</p>
   if (erreur) return <p className="erreur">{erreur}</p>
 
-  const { profil, produits, parcelles } = fiche
+  const { profil, produits, parcelles, peut_noter } = fiche
 
   return (
     <section className="fiche-agri">
@@ -35,6 +40,12 @@ export default function ProfilAgriculteur() {
           <h1>{profil.nom_ferme || profil.nom}</h1>
           {profil.nom_ferme && <p className="detail">par {profil.nom}</p>}
           {profil.region && <p className="detail">{profil.region}</p>}
+          {profil.nombre_avis > 0 && (
+            <p className="detail">
+              <Etoiles note={Number(profil.note_moyenne)} /> {Number(profil.note_moyenne)} ·{' '}
+              {profil.nombre_avis} avis
+            </p>
+          )}
         </div>
       </header>
 
@@ -61,6 +72,8 @@ export default function ProfilAgriculteur() {
           ))}
         </ul>
       )}
+
+      <AvisAgriculteur agriculteurId={id} peutNoter={peut_noter} onChangement={charger} />
     </section>
   )
 }
