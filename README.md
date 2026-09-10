@@ -91,4 +91,17 @@ src/
 - [x] **E2** : notes & avis — seul un client ayant eu une réservation confirmée
       avec l'agriculteur peut le noter ; note moyenne affichée dans l'en-tête de
       la fiche et sur les cartes produit / parcelle
+- [x] **Refonte visuelle « Terroir »** : palette olive/kaki + papier crème,
+      titres Zilla Slab + texte Karla ; bandeau d'accueil avec recherche ;
+      **responsive** (barre d'onglets en bas sur mobile)
+- [ ] PWA (installable, `vite-plugin-pwa`)
 - [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)
+
+## Direction visuelle
+
+Palette dans `src/index.css` (`:root`) : `--olive #68724f` (principale),
+`--olive-fonce #3f4733` (titres), `--ocre #a9762f` (prix, étoiles),
+`--paper #f7f2e7` (fond), `--sable #e4d9c0` (bordures). Polices : **Zilla Slab**
+(titres) + **Karla** (texte), chargées depuis Google Fonts dans `index.html`.
+Point de rupture mobile : `max-width: 768px` (l'en-tête se simplifie, la
+`.bottom-nav` apparaît).
