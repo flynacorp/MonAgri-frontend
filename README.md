@@ -94,7 +94,8 @@ src/
 - [x] **Refonte visuelle « Terroir »** : palette olive/kaki + papier crème,
       titres Zilla Slab + texte Karla ; bandeau d'accueil avec recherche ;
       **responsive** (barre d'onglets en bas sur mobile)
-- [ ] PWA (installable, `vite-plugin-pwa`)
+- [x] **PWA** : installable sur mobile (`vite-plugin-pwa`) — manifeste, icône,
+      service worker qui met en cache la coquille de l'appli
 - [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)
 
 ## Direction visuelle
@@ -105,3 +106,16 @@ Palette dans `src/index.css` (`:root`) : `--olive #68724f` (principale),
 (titres) + **Karla** (texte), chargées depuis Google Fonts dans `index.html`.
 Point de rupture mobile : `max-width: 768px` (l'en-tête se simplifie, la
 `.bottom-nav` apparaît).
+
+## PWA (application installable)
+
+Configurée dans `vite.config.js` (`vite-plugin-pwa`). Le service worker n'est
+actif qu'en **production** (`npm run build`), pas en `npm run dev`. Il met en
+cache la coquille de l'appli (JS/CSS/HTML/polices/icônes) ; les données passent
+toujours par le réseau.
+
+Pour tester : `npm run build && npm run preview`, puis dans le navigateur
+« Installer l'application ».
+
+Les icônes (`public/pwa-*.png`, `apple-touch-icon.png`) sont générées à partir
+d'un dessin de feuille par `npm run icones` (`scripts/generer-icones.mjs`).
