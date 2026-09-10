@@ -25,7 +25,9 @@ export default function Layout({ children }) {
         <div className="compte">
           {utilisateur ? (
             <>
-              <span className="email">{utilisateur.email}</span>
+              <Link to="/mon-profil" className="email">
+                {utilisateur.email}
+              </Link>
               <button onClick={seDeconnecter}>Se déconnecter</button>
             </>
           ) : (

@@ -121,6 +121,14 @@ export default function CarteParcelle({ parcelle, onReservation }) {
 
       {message && <p className="succes">{message}</p>}
       {erreur && <p className="erreur">{erreur}</p>}
+
+      {parcelle.agriculteur_id && (
+        <p className="vendeur">
+          <Link to={`/agriculteurs/${parcelle.agriculteur_id}`}>
+            {parcelle.agriculteur_ferme || parcelle.agriculteur_nom || 'Voir le propriétaire'} →
+          </Link>
+        </p>
+      )}
     </li>
   )
 }

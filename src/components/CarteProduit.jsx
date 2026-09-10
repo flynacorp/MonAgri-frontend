@@ -68,6 +68,14 @@ export default function CarteProduit({ produit }) {
 
       {message && <p className="succes">{message}</p>}
       {erreur && <p className="erreur">{erreur}</p>}
+
+      {produit.agriculteur_id && (
+        <p className="vendeur">
+          <Link to={`/agriculteurs/${produit.agriculteur_id}`}>
+            {produit.agriculteur_ferme || produit.agriculteur_nom || 'Voir le vendeur'} →
+          </Link>
+        </p>
+      )}
     </li>
   )
 }

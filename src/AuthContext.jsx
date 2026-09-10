@@ -68,6 +68,11 @@ export function AuthProvider({ children }) {
       const p = await api('/devenir-agriculteur', { method: 'POST' })
       setProfilCharge(p)
     },
+
+    async majProfil(champs) {
+      const p = await api('/mon-profil', { method: 'PATCH', body: champs })
+      setProfilCharge(p)
+    },
   }
 
   return <AuthContext.Provider value={valeur}>{children}</AuthContext.Provider>

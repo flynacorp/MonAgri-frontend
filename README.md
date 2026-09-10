@@ -53,6 +53,8 @@ src/
     Produits.jsx          liste des produits, réservation par carte
     Parcelles.jsx         liste des parcelles, réservation par carte
     Connexion.jsx         formulaire connexion / inscription
+    MonProfil.jsx         éditer sa fiche (nom, ferme, bio, photo, région)
+    ProfilAgriculteur.jsx fiche publique d'un agriculteur + ses annonces
     MesReservations.jsx   mes réservations (produits + parcelles) avec statut
     EspaceAgriculteur.jsx  hub agriculteur : devenir agriculteur, puis gestion
   App.jsx                routes
@@ -84,4 +86,7 @@ src/
 - [x] **Phase C** : photos via Supabase Storage — photo de la parcelle
       (agriculteur), photo de la culture en cours sur une réservation confirmée
       (agriculteur) ; affichées sur les cartes et dans « Mes réservations »
+- [x] **E1** : fiche publique agriculteur (nom de ferme, bio, photo, région) ;
+      page « Mon profil » pour l'éditer ; lien « vendu par… » sur chaque carte
+- [ ] E2 : notes & avis (client ayant eu une réservation confirmée)
 - [ ] Déploiement (Vercel/Netlify + `CORS_ORIGINS` sur le backend)

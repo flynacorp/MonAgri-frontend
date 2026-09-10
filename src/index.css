@@ -236,6 +236,69 @@ h1 {
   flex-wrap: wrap;
   font-size: 0.85rem;
 }
+
+/* --- Vendeur / fiche agriculteur --- */
+
+.carte .vendeur {
+  margin: 0.6rem 0 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--bordure);
+  font-size: 0.85rem;
+}
+
+.fiche-entete {
+  display: flex;
+  gap: 1.2rem;
+  align-items: center;
+  margin: 1rem 0;
+}
+.fiche-photo {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid var(--bordure);
+}
+.fiche-entete h1 {
+  margin: 0 0 0.2rem;
+}
+.fiche-bio {
+  white-space: pre-wrap;
+  max-width: 55ch;
+}
+.fiche-agri h2 {
+  margin-top: 2rem;
+}
+
+/* --- Mon profil --- */
+
+.mon-profil {
+  max-width: 480px;
+}
+.mon-profil form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.mon-profil label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+}
+.mon-profil input,
+.mon-profil textarea {
+  font: inherit;
+  padding: 0.5rem;
+  border: 1px solid var(--bordure);
+  border-radius: 6px;
+}
+.mon-profil button[type='submit'] {
+  align-self: flex-start;
+}
+.photo-profil {
+  margin-top: 2rem;
+}
 .badge {
   margin-left: auto;
   font-size: 0.75rem;
