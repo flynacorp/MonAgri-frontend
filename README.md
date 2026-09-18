@@ -80,6 +80,9 @@ src/
 - [x] Espace agriculteur : devenir agriculteur ; créer / **modifier** / retirer
       ses produits et parcelles (dont `cultures_autorisees`, `max_m2_par_client`) ;
       accepter / refuser les réservations reçues
+- [x] **Vérification d'identité agriculteur** : candidature par n° SIRET
+      (vérifié auprès de l'API publique du gouvernement), compte « en attente »
+      jusqu'à validation manuelle — aucun droit ni visibilité publique avant ça
 - [x] **Phase B** : prix des réservations (affiché + figé), statut « payé »
       (l'agriculteur le coche), date de récolte (l'agriculteur la pose), le
       client peut annuler sa réservation tant qu'elle est en attente
@@ -96,7 +99,8 @@ src/
       **responsive** (barre d'onglets en bas sur mobile)
 - [x] **PWA** : installable sur mobile (`vite-plugin-pwa`) — manifeste, icône,
       service worker qui met en cache la coquille de l'appli
-- [ ] Déploiement sur Vercel (config prête : [`vercel.json`](vercel.json))
+- [x] **Déployé sur Vercel** : https://mon-agri-frontend.vercel.app
+      ([`vercel.json`](vercel.json))
 
 ## Direction visuelle
 

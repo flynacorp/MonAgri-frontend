@@ -649,6 +649,32 @@ button.lien.danger {
   width: 9rem;
 }
 
+.candidature-agri {
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+.candidature-agri label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.candidature-agri input {
+  font: inherit;
+  padding: 0.55rem;
+  color: var(--ink);
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--surface);
+}
+.candidature-agri button {
+  align-self: flex-start;
+}
+
 /* --- Connexion --- */
 
 .connexion {

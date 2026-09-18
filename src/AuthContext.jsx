@@ -42,6 +42,7 @@ export function AuthProvider({ children }) {
     utilisateur: session?.user ?? null,
     profil,
     estAgriculteur: profil?.role === 'agriculteur',
+    demandeAgriculteurEnAttente: profil?.role === 'agriculteur_attente',
     chargement,
 
     async connexion(email, motDePasse) {
@@ -64,8 +65,8 @@ export function AuthProvider({ children }) {
       await supabase.auth.signOut()
     },
 
-    async devenirAgriculteur() {
-      const p = await api('/devenir-agriculteur', { method: 'POST' })
+    async devenirAgriculteur(siret) {
+      const p = await api('/devenir-agriculteur', { method: 'POST', body: { siret } })
       setProfilCharge(p)
     },
 
