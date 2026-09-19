@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import { api } from '../lib/api'
+import PaiementCarte from './PaiementCarte'
 
 export default function CarteParcelle({ parcelle, onReservation }) {
   const { utilisateur } = useAuth()
@@ -15,9 +16,34 @@ export default function CarteParcelle({ parcelle, onReservation }) {
   const [message, setMessage] = useState(null)
   const [erreur, setErreur] = useState(null)
   const [enCours, setEnCours] = useState(false)
+  const [intention, setIntention] = useState(null) // paiement en ligne en cours
 
   const reservable =
     parcelle.statut === 'disponible' && restante > 0 && cultures.length > 0
+
+  const demande = () => ({
+    parcelle_id: parcelle.id,
+    surface_reservee: Number(surface),
+    culture_demandee: culture,
+    date_debut: dateDebut || undefined,
+  })
+
+  // Enregistre la réservation (avec le paiement autorisé, s'il y en a un).
+  async function enregistrer(paymentIntentId) {
+    await api('/reservations-parcelles', {
+      method: 'POST',
+      body: { ...demande(), payment_intent_id: paymentIntentId },
+    })
+    setMessage(
+      paymentIntentId
+        ? 'Demande envoyée ✓ — ta carte sera débitée si l’agriculteur confirme'
+        : 'Demande envoyée ✓',
+    )
+    setSurface('')
+    setDateDebut('')
+    setIntention(null)
+    onReservation?.()
+  }
 
   async function reserver(e) {
     e.preventDefault()
@@ -25,23 +51,30 @@ export default function CarteParcelle({ parcelle, onReservation }) {
     setErreur(null)
     setEnCours(true)
     try {
-      await api('/reservations-parcelles', {
+      // Le serveur vérifie la demande, dit si ce vendeur encaisse en ligne
+      // et calcule le montant.
+      const reponse = await api('/reservations-parcelles/intention', {
         method: 'POST',
-        body: {
-          parcelle_id: parcelle.id,
-          surface_reservee: Number(surface),
-          culture_demandee: culture,
-          date_debut: dateDebut || undefined,
-        },
+        body: demande(),
       })
-      setMessage('Demande envoyée ✓')
-      setSurface('')
-      setDateDebut('')
-      onReservation?.()
+      if (reponse.mode === 'en_ligne') {
+        setIntention(reponse)
+      } else {
+        await enregistrer()
+      }
     } catch (err) {
       setErreur(err.message)
     } finally {
       setEnCours(false)
+    }
+  }
+
+  async function carteAutorisee(paymentIntentId) {
+    try {
+      await enregistrer(paymentIntentId)
+    } catch (err) {
+      setErreur(err.message)
+      setIntention(null)
     }
   }
 
@@ -80,6 +113,13 @@ export default function CarteParcelle({ parcelle, onReservation }) {
         <Link to="/connexion" className="lien">
           Se connecter pour réserver
         </Link>
+      ) : intention ? (
+        <PaiementCarte
+          clientSecret={intention.client_secret}
+          montant={intention.montant}
+          onAutorise={carteAutorisee}
+          onAnnuler={() => setIntention(null)}
+        />
       ) : (
         <form className="reserver reserver-parcelle" onSubmit={reserver}>
           <label>

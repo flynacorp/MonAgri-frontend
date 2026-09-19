@@ -649,6 +649,19 @@ button.lien.danger {
   width: 9rem;
 }
 
+/* Formulaire de carte (Stripe) dans une carte de réservation */
+.paiement-carte {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
+}
+.paiement-carte .actions {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
 .paiements-agri > p {
   max-width: 60ch;
 }

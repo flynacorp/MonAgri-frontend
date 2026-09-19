@@ -30,12 +30,19 @@ function LigneResa({ type, resa, libelle, complement, onChangement }) {
         <strong>{libelle}</strong>
         {complement}
         {resa.prix != null && ` · ${Number(resa.prix).toFixed(2)} €`}
+        {resa.frais_plateforme != null && (
+          <span className="detail">
+            {' '}
+            (commission MonAgri {Number(resa.frais_plateforme).toFixed(2)} € → tu reçois{' '}
+            {(Number(resa.prix) - Number(resa.frais_plateforme)).toFixed(2)} €)
+          </span>
+        )}
       </span>
 
       {resa.statut === 'en_attente' ? (
         <span className="actions">
           <button type="button" disabled={enCours} onClick={() => patch({ statut: 'confirmee' })}>
-            Accepter
+            {resa.stripe_payment_intent_id ? 'Accepter et encaisser' : 'Accepter'}
           </button>
           <button
             type="button"
@@ -51,7 +58,10 @@ function LigneResa({ type, resa, libelle, complement, onChangement }) {
           <span className={`badge badge-${resa.statut}`}>
             {LIBELLE_STATUT[resa.statut] ?? resa.statut}
           </span>
-          {resa.statut === 'confirmee' && (
+          {resa.statut === 'confirmee' && resa.stripe_payment_intent_id && (
+            <span className="badge badge-confirmee">payé en ligne</span>
+          )}
+          {resa.statut === 'confirmee' && !resa.stripe_payment_intent_id && (
             <button
               type="button"
               className="lien"

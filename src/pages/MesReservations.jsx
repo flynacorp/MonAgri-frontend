@@ -35,6 +35,9 @@ function LigneMaResa({ type, resa, libelle, complement, onChangement }) {
       </span>
 
       <span className="actions">
+        {resa.statut === 'en_attente' && resa.stripe_payment_intent_id && (
+          <span className="badge badge-en_attente">carte autorisée</span>
+        )}
         {resa.statut === 'confirmee' && (
           <span className={`badge ${resa.paye ? 'badge-confirmee' : 'badge-en_attente'}`}>
             {resa.paye ? 'payé' : 'à payer'}

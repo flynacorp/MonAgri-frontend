@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import { api } from '../lib/api'
+import PaiementCarte from './PaiementCarte'
 
 export default function CarteProduit({ produit }) {
   const { utilisateur } = useAuth()
@@ -9,9 +10,29 @@ export default function CarteProduit({ produit }) {
   const [message, setMessage] = useState(null)
   const [erreur, setErreur] = useState(null)
   const [enCours, setEnCours] = useState(false)
+  const [intention, setIntention] = useState(null) // paiement en ligne en cours
 
   const epuise = produit.quantite_disponible < 1
   const total = (Number(quantite) || 0) * produit.prix_unite
+
+  // Enregistre la réservation (avec le paiement autorisé, s'il y en a un).
+  async function enregistrer(paymentIntentId) {
+    await api('/reservations-produits', {
+      method: 'POST',
+      body: {
+        produit_id: produit.id,
+        quantite: Number(quantite),
+        payment_intent_id: paymentIntentId,
+      },
+    })
+    setMessage(
+      paymentIntentId
+        ? 'Réservation envoyée ✓ — ta carte sera débitée si l’agriculteur confirme'
+        : 'Réservation envoyée ✓',
+    )
+    setQuantite(1)
+    setIntention(null)
+  }
 
   async function reserver(e) {
     e.preventDefault()
@@ -19,16 +40,29 @@ export default function CarteProduit({ produit }) {
     setErreur(null)
     setEnCours(true)
     try {
-      await api('/reservations-produits', {
+      // Le serveur dit si ce vendeur encaisse en ligne (et calcule le montant).
+      const reponse = await api('/reservations-produits/intention', {
         method: 'POST',
         body: { produit_id: produit.id, quantite: Number(quantite) },
       })
-      setMessage('Réservation envoyée ✓')
-      setQuantite(1)
+      if (reponse.mode === 'en_ligne') {
+        setIntention(reponse)
+      } else {
+        await enregistrer()
+      }
     } catch (err) {
       setErreur(err.message)
     } finally {
       setEnCours(false)
+    }
+  }
+
+  async function carteAutorisee(paymentIntentId) {
+    try {
+      await enregistrer(paymentIntentId)
+    } catch (err) {
+      setErreur(err.message)
+      setIntention(null)
     }
   }
 
@@ -49,6 +83,13 @@ export default function CarteProduit({ produit }) {
         <Link to="/connexion" className="lien">
           Se connecter pour réserver
         </Link>
+      ) : intention ? (
+        <PaiementCarte
+          clientSecret={intention.client_secret}
+          montant={intention.montant}
+          onAutorise={carteAutorisee}
+          onAnnuler={() => setIntention(null)}
+        />
       ) : (
         <>
           <form className="reserver" onSubmit={reserver}>
