@@ -649,6 +649,13 @@ button.lien.danger {
   width: 9rem;
 }
 
+.paiements-agri > p {
+  max-width: 60ch;
+}
+.paiements-agri button {
+  margin-top: 0.3rem;
+}
+
 .candidature-agri {
   max-width: 360px;
   display: flex;

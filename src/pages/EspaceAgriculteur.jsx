@@ -52,6 +52,59 @@ function FormDevenirAgriculteur() {
   )
 }
 
+// Configuration des paiements en ligne (Stripe Connect). Le statut est lu en
+// direct auprès de Stripe via l'API ; le bouton envoie l'agriculteur sur la
+// page d'inscription hébergée par Stripe, qui le ramène ici ensuite.
+function PaiementsAgriculteur() {
+  const [statut, setStatut] = useState(null) // { configure, pret }
+  const [erreur, setErreur] = useState(null)
+  const [enCours, setEnCours] = useState(false)
+
+  useEffect(() => {
+    api('/stripe/statut')
+      .then(setStatut)
+      .catch((e) => setErreur(e.message))
+  }, [])
+
+  async function configurer() {
+    setEnCours(true)
+    setErreur(null)
+    try {
+      const { url } = await api('/stripe/onboarding', { method: 'POST' })
+      window.location.href = url
+    } catch (e) {
+      setErreur(e.message)
+      setEnCours(false)
+    }
+  }
+
+  return (
+    <section className="paiements-agri">
+      <h2>Paiements en ligne</h2>
+      {!statut && !erreur && <p className="detail">Vérification…</p>}
+
+      {statut?.pret && (
+        <p className="succes">Paiements activés ✓ — tu recevras l'argent des réservations confirmées.</p>
+      )}
+
+      {statut && !statut.pret && (
+        <>
+          <p>
+            {statut.configure
+              ? "Ta configuration n'est pas terminée : Stripe attend encore des informations de ta part."
+              : 'Pour recevoir le paiement de tes ventes en ligne, configure ton compte de paiement (quelques minutes, hébergé par Stripe).'}
+          </p>
+          <button onClick={configurer} disabled={enCours}>
+            {enCours ? '…' : statut.configure ? 'Reprendre la configuration' : 'Configurer les paiements'}
+          </button>
+        </>
+      )}
+
+      {erreur && <p className="erreur">{erreur}</p>}
+    </section>
+  )
+}
+
 export default function EspaceAgriculteur() {
   const {
     utilisateur,
@@ -130,6 +183,7 @@ export default function EspaceAgriculteur() {
     <div className="espace-agri">
       <h1>Espace agriculteur</h1>
       {erreur && <p className="erreur">{erreur}</p>}
+      <PaiementsAgriculteur />
       <GestionProduits produits={produits} onChangement={charger} />
       <GestionParcelles parcelles={parcelles} onChangement={charger} />
       <ReservationsRecues
