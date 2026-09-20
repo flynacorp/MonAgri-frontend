@@ -91,6 +91,12 @@ export default function CarteParcelle({ parcelle, onReservation }) {
         {parcelle.type_sol ? `Sol ${parcelle.type_sol}` : 'Sol non précisé'}
         {parcelle.region ? ` · ${parcelle.region}` : ''}
       </p>
+      {parcelle.agriculteur_retrait_ville && (
+        <p className="detail">
+          Accueil à {parcelle.agriculteur_retrait_ville}
+          {parcelle.agriculteur_retrait_horaires ? ` · ${parcelle.agriculteur_retrait_horaires}` : ''}
+        </p>
+      )}
       <p className="detail">
         <strong>{restante} m²</strong> encore disponibles sur {parcelle.surface_m2}
       </p>

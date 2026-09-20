@@ -40,6 +40,12 @@ export default function ProfilAgriculteur() {
           <h1>{profil.nom_ferme || profil.nom}</h1>
           {profil.nom_ferme && <p className="detail">par {profil.nom}</p>}
           {profil.region && <p className="detail">{profil.region}</p>}
+          {profil.retrait_ville && (
+            <p className="detail">
+              Retrait à {profil.retrait_ville}
+              {profil.retrait_horaires ? ` · ${profil.retrait_horaires}` : ''}
+            </p>
+          )}
           {profil.nombre_avis > 0 && (
             <p className="detail">
               <Etoiles note={Number(profil.note_moyenne)} /> {Number(profil.note_moyenne)} ·{' '}

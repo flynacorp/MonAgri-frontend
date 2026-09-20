@@ -53,12 +53,43 @@ function LigneMaResa({ type, resa, libelle, complement, onChangement }) {
         )}
       </span>
 
+      {resa.retrait && <OuVenir resa={resa} />}
+
       {resa.photo_culture_url && (
         <img src={resa.photo_culture_url} alt="Culture en cours" className="miniature" />
       )}
 
       {erreur && <p className="erreur">{erreur}</p>}
     </li>
+  )
+}
+
+// Où et quand venir. Une fois la réservation confirmée, le serveur envoie aussi
+// l'adresse exacte ; avant, seulement la commune et les horaires.
+function OuVenir({ resa }) {
+  const { ville, horaires, adresse } = resa.retrait
+  const quandEtOu = [ville, horaires].filter(Boolean).join(' · ')
+
+  if (resa.statut === 'confirmee') {
+    return (
+      <div className="retrait">
+        <strong>Où venir</strong>
+        <p>{adresse ?? "L'agriculteur n'a pas encore indiqué son adresse exacte."}</p>
+        {quandEtOu && <p className="detail">{quandEtOu}</p>}
+      </div>
+    )
+  }
+  return (
+    <div className="retrait">
+      {quandEtOu && (
+        <p>
+          <strong>Retrait :</strong> {quandEtOu}
+        </p>
+      )}
+      <p className="detail">
+        L'adresse exacte te sera donnée dès que l'agriculteur aura confirmé ta réservation.
+      </p>
+    </div>
   )
 }
 

@@ -76,6 +76,12 @@ export default function CarteProduit({ produit }) {
         {produit.quantite_disponible} disponible(s)
         {produit.region ? ` · ${produit.region}` : ''}
       </p>
+      {produit.agriculteur_retrait_ville && (
+        <p className="detail">
+          Retrait à {produit.agriculteur_retrait_ville}
+          {produit.agriculteur_retrait_horaires ? ` · ${produit.agriculteur_retrait_horaires}` : ''}
+        </p>
+      )}
 
       {epuise ? (
         <p className="detail">Épuisé</p>

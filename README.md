@@ -94,6 +94,11 @@ src/
 - [x] **E2** : notes & avis — seul un client ayant eu une réservation confirmée
       avec l'agriculteur peut le noter ; note moyenne affichée dans l'en-tête de
       la fiche et sur les cartes produit / parcelle
+- [x] **Lieu de retrait** : l'agriculteur indique sa commune, ses horaires et son
+      adresse exacte (espace agriculteur). Commune + horaires sont visibles sur les
+      cartes et la fiche ; l'adresse exacte n'est donnée au client qu'une fois sa
+      réservation confirmée (« Où venir » dans « Mes réservations »). Sans lieu de
+      retrait, l'agriculteur ne peut pas confirmer de réservation.
 - [x] **Refonte visuelle « Terroir »** : palette olive/kaki + papier crème,
       titres Zilla Slab + texte Karla ; bandeau d'accueil avec recherche ;
       **responsive** (barre d'onglets en bas sur mobile)

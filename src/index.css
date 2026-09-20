@@ -676,21 +676,26 @@ button.lien.danger {
   margin-top: 0.3rem;
 }
 
-.candidature-agri {
+/* Formulaires en colonne : candidature agriculteur, lieu de retrait */
+.candidature-agri,
+.lieu-retrait form {
   max-width: 360px;
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
   margin-top: 1rem;
 }
-.candidature-agri label {
+.candidature-agri label,
+.lieu-retrait label {
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
   font-size: 0.9rem;
   color: var(--ink-soft);
 }
-.candidature-agri input {
+.candidature-agri input,
+.lieu-retrait input,
+.lieu-retrait textarea {
   font: inherit;
   padding: 0.55rem;
   color: var(--ink);
@@ -698,8 +703,39 @@ button.lien.danger {
   border-radius: var(--rayon-s);
   background: var(--surface);
 }
-.candidature-agri button {
+.candidature-agri button,
+.lieu-retrait button {
   align-self: flex-start;
+}
+
+.lieu-retrait {
+  margin-bottom: 1.5rem;
+}
+.lieu-retrait form {
+  max-width: 480px;
+  margin-top: 0.6rem;
+}
+/* Rappel quand le lieu de retrait n'est pas encore renseigné */
+.lieu-retrait .attention {
+  max-width: 480px;
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--rayon-s);
+  background: #f6efdd;
+  border: 1px solid #e7d7a8;
+  color: #8a6d1f;
+}
+
+/* « Où venir » dans Mes réservations */
+.liste-resa .retrait {
+  flex: 1 1 100%;
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--rayon-s);
+  background: var(--olive-pale);
+  border: 1px solid var(--sable);
+  font-size: 0.92rem;
+}
+.liste-resa .retrait p {
+  margin: 0.15rem 0 0;
 }
 
 /* --- Connexion --- */

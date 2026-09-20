@@ -52,6 +52,94 @@ function FormDevenirAgriculteur() {
   )
 }
 
+// Lieu de retrait : où et quand les clients viennent chercher leur commande (ou
+// retrouver leur parcelle). La commune et les horaires sont visibles de tous ;
+// l'adresse exacte n'est donnée au client qu'une fois sa réservation confirmée.
+// Sans commune ni adresse, l'agriculteur ne peut pas confirmer de réservation.
+function LieuRetraitAgriculteur() {
+  const { profil, majProfil } = useAuth()
+  const [ville, setVille] = useState(profil.retrait_ville ?? '')
+  const [horaires, setHoraires] = useState(profil.retrait_horaires ?? '')
+  const [adresse, setAdresse] = useState(profil.retrait_adresse ?? '')
+  const [enCours, setEnCours] = useState(false)
+  const [message, setMessage] = useState(null)
+  const [erreur, setErreur] = useState(null)
+
+  const renseigne = Boolean(profil.retrait_ville && profil.retrait_adresse)
+
+  async function enregistrer(e) {
+    e.preventDefault()
+    setEnCours(true)
+    setMessage(null)
+    setErreur(null)
+    try {
+      await majProfil({
+        retrait_ville: ville.trim() || null,
+        retrait_horaires: horaires.trim() || null,
+        retrait_adresse: adresse.trim() || null,
+      })
+      setMessage('Lieu de retrait enregistré ✓')
+    } catch (err) {
+      setErreur(err.message)
+    } finally {
+      setEnCours(false)
+    }
+  }
+
+  return (
+    <section className="lieu-retrait">
+      <h2>Lieu de retrait</h2>
+      {!renseigne && (
+        <p className="attention">
+          À renseigner avant de pouvoir confirmer une réservation : tes clients doivent savoir où
+          venir.
+        </p>
+      )}
+      <form onSubmit={enregistrer}>
+        <label>
+          Commune
+          <input
+            value={ville}
+            onChange={(e) => setVille(e.target.value)}
+            placeholder="Ex. Foix"
+            maxLength={100}
+            required
+          />
+        </label>
+        <label>
+          Jours et horaires de retrait
+          <input
+            value={horaires}
+            onChange={(e) => setHoraires(e.target.value)}
+            placeholder="Ex. vendredi 17h–19h, samedi matin"
+            maxLength={300}
+          />
+        </label>
+        <label>
+          Adresse exacte et consignes
+          <textarea
+            rows={3}
+            value={adresse}
+            onChange={(e) => setAdresse(e.target.value)}
+            placeholder="Ex. Ferme du Vallon, route de Pamiers. Sonner au portail vert."
+            maxLength={500}
+            required
+          />
+        </label>
+        <p className="detail">
+          La commune et les horaires sont visibles de tous. L'adresse exacte n'est donnée au client
+          qu'une fois sa réservation confirmée.
+        </p>
+        {message && <p className="succes">{message}</p>}
+        {erreur && <p className="erreur">{erreur}</p>}
+        <button type="submit" disabled={enCours}>
+          {enCours ? '…' : 'Enregistrer'}
+        </button>
+      </form>
+    </section>
+  )
+}
+
 // Configuration des paiements en ligne (Stripe Connect). Le statut est lu en
 // direct auprès de Stripe via l'API ; le bouton envoie l'agriculteur sur la
 // page d'inscription hébergée par Stripe, qui le ramène ici ensuite.
@@ -194,6 +282,7 @@ export default function EspaceAgriculteur() {
     <div className="espace-agri">
       <h1>Espace agriculteur</h1>
       {erreur && <p className="erreur">{erreur}</p>}
+      <LieuRetraitAgriculteur />
       <PaiementsAgriculteur />
       <GestionProduits produits={produits} onChangement={charger} />
       <GestionParcelles parcelles={parcelles} onChangement={charger} />
