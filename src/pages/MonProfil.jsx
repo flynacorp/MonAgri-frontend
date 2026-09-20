@@ -30,6 +30,7 @@ export default function MonProfil() {
       </p>
     )
   }
+  if (!profil) return <p className="erreur">Impossible de charger ton profil pour le moment.</p>
   if (!form) return <p>Chargement…</p>
 
   const set = (champ) => (e) => setForm({ ...form, [champ]: e.target.value })

@@ -110,6 +110,7 @@ export default function EspaceAgriculteur() {
     utilisateur,
     estAgriculteur,
     demandeAgriculteurEnAttente,
+    profilIndisponible,
     chargement: chargementAuth,
   } = useAuth()
 
@@ -152,6 +153,16 @@ export default function EspaceAgriculteur() {
       <p>
         <Link to="/connexion">Connecte-toi</Link> pour accéder à ton espace.
       </p>
+    )
+  }
+
+  if (profilIndisponible) {
+    return (
+      <section>
+        <h1>Espace agriculteur</h1>
+        <p className="erreur">Impossible de charger ton profil pour le moment.</p>
+        <button onClick={() => window.location.reload()}>Réessayer</button>
+      </section>
     )
   }
 

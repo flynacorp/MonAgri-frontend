@@ -11,6 +11,9 @@ const AuthContext = createContext(null)
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
   const [profilCharge, setProfilCharge] = useState(null)
+  // Id de l'utilisateur dont on a FINI de charger le profil (réussi ou non) :
+  // tant que ce n'est pas lui, on est en train de le charger.
+  const [profilEssaiPour, setProfilEssaiPour] = useState(null)
   const [chargement, setChargement] = useState(true)
 
   useEffect(() => {
@@ -32,10 +35,15 @@ export function AuthProvider({ children }) {
     api('/mon-profil')
       .then(setProfilCharge)
       .catch(() => setProfilCharge(null))
+      .finally(() => setProfilEssaiPour(utilisateurId))
   }, [utilisateurId])
 
   // Le profil chargé n'est valable que s'il correspond à l'utilisateur courant.
   const profil = utilisateurId && profilCharge?.id === utilisateurId ? profilCharge : null
+
+  // Connecté, mais le profil se charge encore (ex. serveur qui se réveille) :
+  // les pages qui dépendent du rôle doivent attendre, pas deviner « pas agriculteur ».
+  const profilEnChargement = Boolean(utilisateurId) && profilEssaiPour !== utilisateurId
 
   const valeur = {
     session,
@@ -43,7 +51,9 @@ export function AuthProvider({ children }) {
     profil,
     estAgriculteur: profil?.role === 'agriculteur',
     demandeAgriculteurEnAttente: profil?.role === 'agriculteur_attente',
-    chargement,
+    chargement: chargement || profilEnChargement,
+    // Connecté, chargement terminé, mais profil introuvable (erreur réseau / serveur).
+    profilIndisponible: Boolean(utilisateurId) && !profilEnChargement && !profil,
 
     async connexion(email, motDePasse) {
       const { error } = await supabase.auth.signInWithPassword({
