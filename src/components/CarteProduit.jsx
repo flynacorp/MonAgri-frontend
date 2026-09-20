@@ -67,7 +67,7 @@ export default function CarteProduit({ produit }) {
   }
 
   return (
-    <li className="carte">
+    <li className={intention ? 'carte carte-paiement' : 'carte'}>
       <h3>{produit.nom}</h3>
       <p className="prix">
         {produit.prix_unite} € <span>/ unité</span>

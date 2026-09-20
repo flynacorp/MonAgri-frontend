@@ -649,6 +649,13 @@ button.lien.danger {
   width: 9rem;
 }
 
+/* Pendant le paiement, la carte prend toute la largeur de la grille (bornée) :
+   le formulaire Stripe serait écrasé et très haut dans une colonne de 240 px. */
+.carte-paiement {
+  grid-column: 1 / -1;
+  max-width: 480px;
+}
+
 /* Formulaire de carte (Stripe) dans une carte de réservation */
 .paiement-carte {
   display: flex;

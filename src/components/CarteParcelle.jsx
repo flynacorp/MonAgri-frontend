@@ -79,7 +79,7 @@ export default function CarteParcelle({ parcelle, onReservation }) {
   }
 
   return (
-    <li className="carte">
+    <li className={intention ? 'carte carte-paiement' : 'carte'}>
       {parcelle.photo_url && (
         <img src={parcelle.photo_url} alt="" className="carte-photo" />
       )}
