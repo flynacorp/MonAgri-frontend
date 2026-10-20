@@ -68,9 +68,10 @@ export default function CarteProduit({ produit }) {
 
   return (
     <li className={intention ? 'carte carte-paiement' : 'carte'}>
+      {produit.photo_url && <img src={produit.photo_url} alt={produit.nom} className="carte-photo" />}
       <h3>{produit.nom}</h3>
       <p className="prix">
-        {produit.prix_unite} € <span>/ unité</span>
+        {produit.prix_unite} € <span>/ {produit.unite || 'unité'}</span>
       </p>
       <p className="detail">
         {produit.quantite_disponible} disponible(s)

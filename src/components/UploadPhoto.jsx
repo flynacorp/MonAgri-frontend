@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { supabase } from '../supabase'
+import { reduireImage } from '../lib/image'
 
 const BUCKET = 'photos'
 
 // Envoie une image vers Supabase Storage puis passe son URL publique à onUpload
 // (qui doit l'enregistrer côté API). onUpload(null) = retirer la photo.
+// La photo est d'abord réduite (cf. lib/image.js) : plus rapide à envoyer.
 export default function UploadPhoto({ dossier, urlActuelle, onUpload }) {
   const [enCours, setEnCours] = useState(false)
   const [erreur, setErreur] = useState(null)
@@ -17,9 +19,12 @@ export default function UploadPhoto({ dossier, urlActuelle, onUpload }) {
     setErreur(null)
     setEnCours(true)
     try {
-      const ext = fichier.name.split('.').pop()?.toLowerCase() || 'jpg'
+      const aEnvoyer = await reduireImage(fichier)
+      // Réduite = JPEG ; sinon on garde l'extension d'origine.
+      const ext =
+        aEnvoyer === fichier ? fichier.name.split('.').pop()?.toLowerCase() || 'jpg' : 'jpg'
       const chemin = `${dossier}/${Date.now()}.${ext}`
-      const envoi = await supabase.storage.from(BUCKET).upload(chemin, fichier)
+      const envoi = await supabase.storage.from(BUCKET).upload(chemin, aEnvoyer)
       if (envoi.error) throw new Error(envoi.error.message)
 
       const { data } = supabase.storage.from(BUCKET).getPublicUrl(chemin)

@@ -94,6 +94,10 @@ src/
 - [x] **E2** : notes & avis — seul un client ayant eu une réservation confirmée
       avec l'agriculteur peut le noter ; note moyenne affichée dans l'en-tête de
       la fiche et sur les cartes produit / parcelle
+- [x] **Photos et catalogue des produits** : chaque produit peut avoir une photo
+      (réduite à 1280 px avant l'envoi), une unité de vente (kg, botte, pièce…)
+      et un lien avec le catalogue des produits de référence (suggestions de noms
+      en tapant, unité préremplie) ; la photo s'affiche sur la carte du produit
 - [x] **Lieu de retrait** : l'agriculteur indique sa commune, ses horaires et son
       adresse exacte (espace agriculteur). Commune + horaires sont visibles sur les
       cartes et la fiche ; l'adresse exacte n'est donnée au client qu'une fois sa
