@@ -7,6 +7,10 @@ import MesReservations from './pages/MesReservations'
 import EspaceAgriculteur from './pages/EspaceAgriculteur'
 import MonProfil from './pages/MonProfil'
 import ProfilAgriculteur from './pages/ProfilAgriculteur'
+import NouveauMotDePasse from './pages/NouveauMotDePasse'
+import MentionsLegales from './pages/MentionsLegales'
+import Confidentialite from './pages/Confidentialite'
+import Conditions from './pages/Conditions'
 
 export default function App() {
   return (
@@ -19,6 +23,10 @@ export default function App() {
         <Route path="/mon-profil" element={<MonProfil />} />
         <Route path="/agriculteurs/:id" element={<ProfilAgriculteur />} />
         <Route path="/connexion" element={<Connexion />} />
+        <Route path="/nouveau-mot-de-passe" element={<NouveauMotDePasse />} />
+        <Route path="/mentions-legales" element={<MentionsLegales />} />
+        <Route path="/confidentialite" element={<Confidentialite />} />
+        <Route path="/conditions" element={<Conditions />} />
         <Route
           path="*"
           element={

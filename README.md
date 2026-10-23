@@ -28,6 +28,8 @@ port 3000). En dev il accepte toutes les origines (CORS).
 | `VITE_SUPABASE_URL` | URL du projet Supabase (même que le backend) |
 | `VITE_SUPABASE_ANON_KEY` | clé publishable / anon |
 | `VITE_API_URL` | URL de l'API backend (`http://localhost:3000` en dev) |
+| `VITE_STRIPE_PUBLISHABLE_KEY` | clé publique Stripe (`pk_test_…`), pour le formulaire de carte |
+| `VITE_PAIEMENTS_EN_LIGNE` | *(optionnelle)* `oui` pour montrer aux agriculteurs le bloc « Paiements en ligne ». **Vide pendant le pilote** (Stripe est en mode test) : le bloc est masqué et les clients paient au retrait. |
 
 Ces valeurs partent dans le navigateur — ce ne sont pas des secrets — mais on les
 garde hors du dépôt (`.env*` est ignoré, sauf `.env.example`).
@@ -94,6 +96,21 @@ src/
 - [x] **E2** : notes & avis — seul un client ayant eu une réservation confirmée
       avec l'agriculteur peut le noter ; note moyenne affichée dans l'en-tête de
       la fiche et sur les cartes produit / parcelle
+- [x] **Pages légales** (mentions légales, politique de confidentialité, conditions
+      d'utilisation), liées dans le pied de page ; case « j'accepte » à l'inscription.
+      Les informations de l'éditeur sont à compléter dans
+      [`src/legal/editeur.js`](src/legal/editeur.js) : tant qu'elles ne le sont pas,
+      elles s'affichent en jaune avec un bandeau « page provisoire ». Ce sont des
+      modèles, à faire relire avant l'ouverture au public.
+- [x] **Mot de passe oublié** : demande par e-mail, puis page `/nouveau-mot-de-passe`
+      (le lien reçu ouvre une session qui permet de choisir le nouveau mot de passe).
+      L'e-mail part de Supabase : il faut y brancher un SMTP (Brevo), sinon il n'est
+      envoyé qu'aux membres de l'équipe du projet, 2 par heure.
+- [x] **Lien et QR code de la boutique** dans l'espace agriculteur : à partager aux
+      clients ou à afficher sur l'étal (QR code fabriqué dans le navigateur).
+- [x] **Stripe chargé seulement au paiement** : le script de paiement ne se charge plus à
+      chaque visite (import `@stripe/stripe-js/pure`), seulement quand un formulaire
+      de carte s'affiche.
 - [x] **Photos et catalogue des produits** : chaque produit peut avoir une photo
       (réduite à 1280 px avant l'envoi), une unité de vente (kg, botte, pièce…)
       et un lien avec le catalogue des produits de référence (suggestions de noms

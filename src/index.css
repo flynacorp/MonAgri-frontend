@@ -771,6 +771,104 @@ button.lien.danger {
   color: var(--rouge);
 }
 
+/* Case à cocher « j'accepte les conditions » (inscription) */
+.connexion label.case {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.6rem;
+  color: var(--ink);
+}
+.connexion label.case input {
+  width: auto;
+  flex: none;
+  margin-top: 0.25rem;
+}
+
+/* --- Lien et QR code de la boutique (espace agriculteur) --- */
+
+.lien-boutique {
+  margin-bottom: 1.5rem;
+}
+.lien-boutique > p {
+  max-width: 60ch;
+}
+.lien-ligne {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  max-width: 600px;
+}
+.lien-ligne input {
+  flex: 1 1 260px;
+  font: inherit;
+  padding: 0.55rem;
+  color: var(--ink);
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+  background: var(--surface);
+}
+.qr {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.qr img {
+  border: 1px solid var(--sable);
+  border-radius: var(--rayon-s);
+}
+
+/* --- Pied de page et pages légales --- */
+
+.pied {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin-top: 3rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--sable);
+  font-size: 0.85rem;
+}
+.pied a {
+  color: var(--ink-soft);
+}
+.pied a:hover {
+  color: var(--argile);
+}
+
+.page-legale {
+  max-width: 72ch;
+}
+.page-legale h2 {
+  margin-top: 1.8rem;
+  font-size: 1.2rem;
+}
+.page-legale p {
+  margin-bottom: 0.7rem;
+}
+.page-legale ul {
+  padding-left: 1.2rem;
+  margin: 0.3rem 0 0.8rem;
+}
+.page-legale li {
+  margin-bottom: 0.35rem;
+}
+/* Rappel « à compléter » (informations de l'éditeur pas encore renseignées) */
+.attention {
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--rayon-s);
+  background: #f6efdd;
+  border: 1px solid #e7d7a8;
+  color: #8a6d1f;
+}
+mark.a-completer {
+  background: #f6efdd;
+  color: #8a6d1f;
+  padding: 0 0.25rem;
+  border-radius: 4px;
+}
+
 /* --- Mobile --- */
 
 @media (max-width: 768px) {

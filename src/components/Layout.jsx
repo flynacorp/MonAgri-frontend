@@ -85,7 +85,14 @@ export default function Layout({ children }) {
         </div>
       </header>
 
-      <main className="contenu">{children}</main>
+      <main className="contenu">
+        {children}
+        <footer className="pied">
+          <Link to="/mentions-legales">Mentions légales</Link>
+          <Link to="/confidentialite">Confidentialité</Link>
+          <Link to="/conditions">Conditions d'utilisation</Link>
+        </footer>
+      </main>
 
       <nav className="bottom-nav">
         <NavLink to="/" end className={classeActif}>

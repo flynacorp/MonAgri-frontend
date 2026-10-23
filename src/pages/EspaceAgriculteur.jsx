@@ -52,6 +52,88 @@ function FormDevenirAgriculteur() {
   )
 }
 
+// Le bloc « Paiements en ligne » (Stripe) n'est affiché que si VITE_PAIEMENTS_EN_LIGNE=oui.
+// Tant que Stripe est en mode test, on le masque : les producteurs du pilote
+// n'ont pas à créer de compte de paiement, et leurs clients paient au retrait.
+const PAIEMENTS_EN_LIGNE = import.meta.env.VITE_PAIEMENTS_EN_LIGNE === 'oui'
+
+// Le lien de la boutique du producteur (sa fiche publique) à partager à ses
+// clients, avec un QR code à afficher sur l'étal ou à envoyer. Le QR code est
+// fabriqué dans le navigateur ; la bibliothèque n'est chargée qu'à l'ouverture.
+function LienBoutique() {
+  const { utilisateur } = useAuth()
+  const lien = `${window.location.origin}/agriculteurs/${utilisateur.id}`
+  const [qr, setQr] = useState(null)
+  const [copie, setCopie] = useState(false)
+
+  useEffect(() => {
+    let actif = true
+    import('qrcode')
+      .then(({ default: QRCode }) =>
+        QRCode.toDataURL(lien, { width: 480, margin: 2, color: { dark: '#3f4733', light: '#fffdf7' } }),
+      )
+      .then((url) => {
+        if (actif) setQr(url)
+      })
+      .catch(() => {}) // sans QR code, le lien reste utilisable
+    return () => {
+      actif = false
+    }
+  }, [lien])
+
+  async function copier() {
+    try {
+      await navigator.clipboard.writeText(lien)
+      setCopie(true)
+      setTimeout(() => setCopie(false), 2500)
+    } catch {
+      // le lien reste affiché : on peut le sélectionner et le copier à la main
+    }
+  }
+
+  async function partager() {
+    try {
+      await navigator.share({ title: 'Ma boutique MonAgri', url: lien })
+    } catch {
+      // partage annulé
+    }
+  }
+
+  return (
+    <section className="lien-boutique">
+      <h2>Ma boutique en ligne</h2>
+      <p>
+        Partage ce lien à tes clients (message, WhatsApp, réseaux sociaux) ou affiche le QR code
+        sur ton étal : ils arrivent directement sur tes produits.
+      </p>
+      <div className="lien-ligne">
+        <input
+          readOnly
+          value={lien}
+          onFocus={(e) => e.target.select()}
+          aria-label="Lien de ma boutique"
+        />
+        <button type="button" onClick={copier}>
+          {copie ? 'Lien copié ✓' : 'Copier le lien'}
+        </button>
+        {navigator.share && (
+          <button type="button" className="secondaire" onClick={partager}>
+            Partager
+          </button>
+        )}
+      </div>
+      {qr && (
+        <div className="qr">
+          <img src={qr} alt="QR code vers ma boutique" width="160" height="160" />
+          <a href={qr} download="qr-ma-boutique-monagri.png" className="lien">
+            Télécharger le QR code
+          </a>
+        </div>
+      )}
+    </section>
+  )
+}
+
 // Lieu de retrait : où et quand les clients viennent chercher leur commande (ou
 // retrouver leur parcelle). La commune et les horaires sont visibles de tous ;
 // l'adresse exacte n'est donnée au client qu'une fois sa réservation confirmée.
@@ -282,8 +364,9 @@ export default function EspaceAgriculteur() {
     <div className="espace-agri">
       <h1>Espace agriculteur</h1>
       {erreur && <p className="erreur">{erreur}</p>}
+      <LienBoutique />
       <LieuRetraitAgriculteur />
-      <PaiementsAgriculteur />
+      {PAIEMENTS_EN_LIGNE && <PaiementsAgriculteur />}
       <GestionProduits produits={produits} onChangement={charger} />
       <GestionParcelles parcelles={parcelles} onChangement={charger} />
       <ReservationsRecues

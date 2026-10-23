@@ -75,6 +75,30 @@ export function AuthProvider({ children }) {
       await supabase.auth.signOut()
     },
 
+    // Envoie un e-mail avec un lien pour choisir un nouveau mot de passe. Supabase
+    // répond pareil que l'adresse existe ou non : on ne révèle rien sur les comptes.
+    async motDePasseOublie(email) {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/nouveau-mot-de-passe`,
+      })
+      if (error) {
+        // Message volontairement neutre : le texte brut de Supabase est technique,
+        // en anglais, et pourrait révéler si une adresse correspond à un compte.
+        console.error(error)
+        throw new Error(
+          error.status === 429 || /rate limit/i.test(error.message)
+            ? 'Trop de demandes pour le moment : réessaie dans quelques minutes.'
+            : "Impossible d'envoyer l'e-mail pour le moment. Réessaie plus tard.",
+        )
+      }
+    },
+
+    // Choisit le nouveau mot de passe (le lien reçu par e-mail ouvre une session).
+    async nouveauMotDePasse(motDePasse) {
+      const { error } = await supabase.auth.updateUser({ password: motDePasse })
+      if (error) throw new Error(error.message)
+    },
+
     async devenirAgriculteur(siret) {
       const p = await api('/devenir-agriculteur', { method: 'POST', body: { siret } })
       setProfilCharge(p)

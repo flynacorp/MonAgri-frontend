@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Elements, PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js'
-import { stripePromise } from '../lib/stripe'
+import { chargerStripe } from '../lib/stripe'
 
 // Aspect du formulaire Stripe, aligné sur le thème « Terroir » du site.
 const apparence = {
@@ -67,6 +67,7 @@ function FormulairePaiement({ montant, onAutorise, onAnnuler }) {
 // Formulaire de carte Stripe pour une intention de paiement créée par le serveur.
 // `onAutorise(paymentIntentId)` est appelé une fois la carte autorisée.
 export default function PaiementCarte({ clientSecret, montant, onAutorise, onAnnuler }) {
+  const stripePromise = chargerStripe() // charge Stripe.js la première fois seulement
   if (!stripePromise) {
     return (
       <>
