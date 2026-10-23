@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../AuthContext'
 import { api } from '../lib/api'
 import PaiementCarte from './PaiementCarte'
+import IdeesPreparation from './IdeesPreparation'
 
-export default function CarteProduit({ produit }) {
+// `recettes` : les idées de préparation proposées pour ce produit (facultatif).
+export default function CarteProduit({ produit, recettes = [] }) {
   const { utilisateur } = useAuth()
   const [quantite, setQuantite] = useState(1)
   const [message, setMessage] = useState(null)
@@ -118,6 +120,8 @@ export default function CarteProduit({ produit }) {
 
       {message && <p className="succes">{message}</p>}
       {erreur && <p className="erreur">{erreur}</p>}
+
+      <IdeesPreparation recettes={recettes} />
 
       {produit.agriculteur_id && (
         <p className="vendeur">

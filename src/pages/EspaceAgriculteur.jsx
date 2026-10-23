@@ -4,6 +4,7 @@ import { useAuth } from '../AuthContext'
 import { api } from '../lib/api'
 import GestionProduits from '../components/GestionProduits'
 import GestionParcelles from '../components/GestionParcelles'
+import GestionRecettes from '../components/GestionRecettes'
 import ReservationsRecues from '../components/ReservationsRecues'
 
 // Formulaire de candidature : le SIRET est vérifié côté serveur auprès de
@@ -286,6 +287,7 @@ export default function EspaceAgriculteur() {
 
   const [produits, setProduits] = useState([])
   const [parcelles, setParcelles] = useState([])
+  const [recettes, setRecettes] = useState([])
   const [resaRecues, setResaRecues] = useState({
     reservations_produits: [],
     reservations_parcelles: [],
@@ -293,24 +295,28 @@ export default function EspaceAgriculteur() {
   const [chargement, setChargement] = useState(true)
   const [erreur, setErreur] = useState(null)
 
+  const utilisateurId = utilisateur?.id
+
   const charger = useCallback(async () => {
     if (!estAgriculteur) return
     setErreur(null)
     try {
-      const [mp, mpa, rr] = await Promise.all([
+      const [mp, mpa, rr, rec] = await Promise.all([
         api('/mes-produits'),
         api('/mes-parcelles'),
         api('/reservations-recues'),
+        api(`/recettes?auteur_id=${utilisateurId}`),
       ])
       setProduits(mp)
       setParcelles(mpa)
       setResaRecues(rr)
+      setRecettes(rec)
     } catch (e) {
       setErreur(e.message)
     } finally {
       setChargement(false)
     }
-  }, [estAgriculteur])
+  }, [estAgriculteur, utilisateurId])
 
   useEffect(() => {
     charger()
@@ -368,6 +374,7 @@ export default function EspaceAgriculteur() {
       <LieuRetraitAgriculteur />
       {PAIEMENTS_EN_LIGNE && <PaiementsAgriculteur />}
       <GestionProduits produits={produits} onChangement={charger} />
+      <GestionRecettes produits={produits} recettes={recettes} onChangement={charger} />
       <GestionParcelles parcelles={parcelles} onChangement={charger} />
       <ReservationsRecues
         donnees={resaRecues}

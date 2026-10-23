@@ -96,6 +96,9 @@ src/
 - [x] **E2** : notes & avis — seul un client ayant eu une réservation confirmée
       avec l'agriculteur peut le noter ; note moyenne affichée dans l'en-tête de
       la fiche et sur les cartes produit / parcelle
+- [x] **Idées de préparation** : l'agriculteur propose des recettes pour ses produits
+      (titre, ingrédients, préparation, photo ; espace agriculteur). Elles se déplient
+      sous la carte du produit (« Idées de préparation (n) ») et sur sa fiche.
 - [x] **Pages légales** (mentions légales, politique de confidentialité, conditions
       d'utilisation), liées dans le pied de page ; case « j'accepte » à l'inscription.
       Les informations de l'éditeur sont à compléter dans

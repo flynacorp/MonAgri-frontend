@@ -4,6 +4,7 @@ import CarteProduit from '../components/CarteProduit'
 
 export default function Produits() {
   const [produits, setProduits] = useState([])
+  const [recettes, setRecettes] = useState([])
   const [erreur, setErreur] = useState(null)
   const [chargement, setChargement] = useState(true)
   const [recherche, setRecherche] = useState('')
@@ -13,6 +14,11 @@ export default function Produits() {
       .then(setProduits)
       .catch((e) => setErreur(e.message))
       .finally(() => setChargement(false))
+    // Les idées de préparation sont un « plus » : si elles ne se chargent pas,
+    // le marché s'affiche quand même.
+    api('/recettes')
+      .then(setRecettes)
+      .catch(() => {})
   }, [])
 
   const liste = useMemo(() => {
@@ -60,7 +66,11 @@ export default function Produits() {
       ) : (
         <ul className="cartes">
           {liste.map((p) => (
-            <CarteProduit key={p.id} produit={p} />
+            <CarteProduit
+              key={p.id}
+              produit={p}
+              recettes={recettes.filter((r) => r.produit_id === p.id)}
+            />
           ))}
         </ul>
       )}

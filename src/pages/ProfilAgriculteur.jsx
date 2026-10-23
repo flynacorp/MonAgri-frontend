@@ -5,6 +5,7 @@ import CarteProduit from '../components/CarteProduit'
 import CarteParcelle from '../components/CarteParcelle'
 import Etoiles from '../components/Etoiles'
 import AvisAgriculteur from '../components/AvisAgriculteur'
+import { ListeIdees } from '../components/IdeesPreparation'
 
 export default function ProfilAgriculteur() {
   const { id } = useParams()
@@ -27,6 +28,7 @@ export default function ProfilAgriculteur() {
   if (erreur) return <p className="erreur">{erreur}</p>
 
   const { profil, produits, parcelles, peut_noter } = fiche
+  const recettes = fiche.recettes ?? []
 
   return (
     <section className="fiche-agri">
@@ -63,9 +65,20 @@ export default function ProfilAgriculteur() {
       ) : (
         <ul className="cartes">
           {produits.map((p) => (
-            <CarteProduit key={p.id} produit={p} />
+            <CarteProduit
+              key={p.id}
+              produit={p}
+              recettes={recettes.filter((r) => r.produit_id === p.id)}
+            />
           ))}
         </ul>
+      )}
+
+      {recettes.length > 0 && (
+        <>
+          <h2>Ses idées de préparation</h2>
+          <ListeIdees recettes={recettes} montrerProduit />
+        </>
       )}
 
       <h2>Ses parcelles</h2>
